@@ -35,5 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 .env
+/pgdata
 src/static/image
 src/static/video
