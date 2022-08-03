@@ -14,6 +14,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       # - name: install node_modules
       #   run: npm install
+      - name: rimraf dist
+        run: npm run prebuild
       - name: build project
         run: npm run build
       - name: check prettier format
