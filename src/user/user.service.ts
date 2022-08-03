@@ -40,23 +40,15 @@ export class UserService {
   }
 
   async getByEmail(email: string): Promise<User> {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { email: email },
-      });
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
 
-      if (!user) {
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-
-      return user;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to get user',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+
+    return user;
   }
 
   async createUser(userDto: UserDto): Promise<User> {

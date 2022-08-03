@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MovieService } from '../movie/movie.service';
@@ -32,6 +33,8 @@ const usersTest = [
 
 describe('UserService', () => {
   let userService: UserService;
+  let movieService: MovieService;
+  let jwtService: JwtService;
 
   const mockUserRepository = {
     find: jest.fn(),
@@ -52,16 +55,22 @@ describe('UserService', () => {
         },
         {
           provide: MovieService,
-          useFactory: jest.fn(),
+          useValue: jest.fn(),
+        },
+        {
+          provide: JwtService,
+          useValue: jest.fn(),
         },
       ],
     }).compile();
 
     userService = module.get<UserService>(UserService);
+    movieService = module.get<MovieService>(MovieService);
+    jwtService = module.get<JwtService>(JwtService);
   });
 
   describe('getAll()', () => {
-    it('Successfully get all users', async () => {
+    it('Successfully gets all users', async () => {
       mockUserRepository.find.mockReturnValue(usersTest);
 
       const getUsers = await userService.getAll();
@@ -71,7 +80,7 @@ describe('UserService', () => {
       expect(mockUserRepository.find).toHaveBeenCalledTimes(1);
     });
 
-    it('Fail to get all users (INTERNAL_SERVER_ERROR)', async () => {
+    it('Fail to gets all users (INTERNAL_SERVER_ERROR)', async () => {
       mockUserRepository.find.mockRejectedValue(
         new HttpException(
           'Failed to get users',
@@ -84,7 +93,7 @@ describe('UserService', () => {
   });
 
   describe('getById()', () => {
-    it('Successfully get user by ID', async () => {
+    it('Successfully gets user by ID', async () => {
       mockUserRepository.findOne.mockReturnValue(usersTest[1]);
 
       expect(await userService.getById('2')).toEqual(usersTest[1]);
@@ -95,10 +104,48 @@ describe('UserService', () => {
         new HttpException('User not found', HttpStatus.NOT_FOUND),
       );
 
-      const user = await userService.getById('5');
-      console.log(user);
-
-      await expect(user).rejects.toThrow('User not found');
+      await expect(userService.getById('5')).rejects.toThrow('User not found');
     });
+  });
+
+  describe('getByEmail()', () => {
+    it('Successfully gets yser by email', async () => {
+      mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+
+      expect(await userService.getByEmail('Oleg@mail.ru')).toEqual(
+        usersTest[0],
+      );
+    });
+
+    it('Fail to gets user by email (User not found)', async () => {
+      mockUserRepository.findOne.mockRejectedValue(
+        new HttpException('User not found', HttpStatus.NOT_FOUND),
+      );
+
+      await expect(userService.getByEmail('Demon@mail.com')).rejects.toThrow(
+        'User not found',
+      );
+    });
+  });
+
+  describe('createUser()', () => {
+    it('Successfully creates a user', async () => {
+      const userTest = {
+        firstName: 'Lock',
+        lastName: 'Bonyan',
+        email: 'Lock@mail.com',
+        password: '20012002',
+      };
+      mockUserRepository.create.mockReturnValue(userTest);
+      mockUserRepository.save.mockReturnValue(userTest);
+
+      const savedUser = await userService.createUser(userTest);
+
+      expect(savedUser).toEqual(userTest);
+    });
+  });
+
+  describe('addMovieToFav()', () => {
+    it('Successfully adds movie to favorites', async () => {});
   });
 });
