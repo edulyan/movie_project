@@ -20,8 +20,8 @@ jobs:
         run: npm run build
       - name: check prettier format
         run: npm run format
-      - name: start project
-        run: npm run start
+      # - name: start project
+      #   run: npm run start
       - name: start development mode
         run: npm run start:dev
       - name: start debug mode
