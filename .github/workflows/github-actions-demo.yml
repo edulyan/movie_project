@@ -37,4 +37,4 @@ jobs:
       # - name: start prod mode
       #   run: npm run start:prod
       # - name: start prod mode
-      #   run: npm run start:prod
+      #   run: npm run start:prod/
