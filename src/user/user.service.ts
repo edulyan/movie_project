@@ -67,91 +67,64 @@ export class UserService {
   }
 
   async changeUserRole(changeRole: ChangeRoleDto) {
-    try {
-      const user = await this.getById(changeRole.userId);
+    const user = await this.getById(changeRole.userId);
 
-      user.role = changeRole.role;
+    user.role = changeRole.role;
 
-      await this.userRepository.save(user);
+    await this.userRepository.save(user);
 
-      const token = this.jwtService.sign({
-        id: user.id,
-        role: user.role,
-      });
+    const token = this.jwtService.sign({
+      id: user.id,
+      role: user.role,
+    });
 
-      return { user, token };
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to change role by user',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return { user, token };
   }
 
   async updateUser(
     id: string,
     userDtoUpd: UserDtoUpd,
   ): Promise<UpdateResult | void> {
-    try {
-      return await this.userRepository
-        .update(id, userDtoUpd)
-        .catch((id: string) => {
-          if (!id) {
-            throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-          }
-        })
-        .catch((user: UserDtoUpd) => {
-          if (!user) {
-            throw new HttpException('Body is required', HttpStatus.BAD_REQUEST);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to get user',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    if (!id) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+
+    if (!userDtoUpd) {
+      throw new HttpException('Body is required', HttpStatus.BAD_REQUEST);
+    }
+
+    return await this.userRepository.update(id, userDtoUpd);
   }
 
   async removeMovieFromFav(dto: UserMovieIdsDto): Promise<boolean> {
-    try {
-      const user = await this.getById(dto.userId);
+    const user = await this.getById(dto.userId);
 
-      const found = user.favorites.findIndex((x: any) => x.id == dto.movieId);
-
-      if (found == null) {
-        throw new HttpException(
-          'Movie not found to delete',
-          HttpStatus.NOT_FOUND,
-        );
-      }
-
-      user.favorites.splice(found, 1);
-
-      await this.userRepository.save(user);
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to remove movie from favorites',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+
+    const found = user.favorites.findIndex((x: any) => x.id == dto.movieId);
+
+    if (found == null) {
+      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+    }
+
+    user.favorites.splice(found, 1);
+
+    await this.userRepository.save(user);
+
+    return true;
   }
 
-  async deleteUser(id: string): Promise<void> {
+  async deleteUser(id: string): Promise<boolean> {
     const user = await this.userRepository.findOne(id);
 
     if (!user) {
-      throw new HttpException(
-        'User not found to deletion',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     await this.userRepository.delete(user.id);
+
+    return true;
   }
 }

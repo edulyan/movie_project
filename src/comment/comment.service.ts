@@ -18,7 +18,6 @@ export class CommentService {
     try {
       return await this.commentRepository.find();
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Failed to get comments',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -27,60 +26,38 @@ export class CommentService {
   }
 
   async getById(id: string): Promise<Comment> {
-    try {
-      const comment = await this.commentRepository.findOne({
-        where: { id: id },
-      });
-      if (!comment) {
-        throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
-      }
-
-      return comment;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to get comment',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    const comment = await this.commentRepository.findOne({
+      where: { id: id },
+    });
+    if (!comment) {
+      throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
     }
+
+    return comment;
   }
 
   async createComment(comment: CommentDto) {
-    try {
-      console.log(comment);
+    const userOne = await this.userService.getById(comment.userId);
+    const movieOne = await this.movieService.getById(comment.movieId);
+    const newComment = await this.commentRepository.create({
+      ...comment,
+      username: userOne.firstName + ' ' + userOne.lastName,
+      movie: movieOne,
+      user: userOne,
+    });
 
-      const userOne = await this.userService.getById(comment.userId);
-      const movieOne = await this.movieService.getById(comment.movieId);
-      const newComment = await this.commentRepository.create({
-        ...comment,
-        username: userOne.firstName + ' ' + userOne.lastName,
-        movie: movieOne,
-        user: userOne,
-      });
-
-      return await this.commentRepository.save(newComment);
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to create comment',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return await this.commentRepository.save(newComment);
   }
 
-  async deleteComment(id: string): Promise<void> {
-    try {
-      await this.commentRepository.delete(id).catch((err: string) => {
-        if (!id) {
-          throw new HttpException('Failed to found user', HttpStatus.NOT_FOUND);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to delete user',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+  async deleteComment(id: string): Promise<boolean> {
+    const comment = await this.commentRepository.findOne(id);
+
+    if (!comment) {
+      throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
     }
+
+    await this.commentRepository.delete(id);
+
+    return true;
   }
 }

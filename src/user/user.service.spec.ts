@@ -3,17 +3,30 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MovieService } from '../movie/movie.service';
-import { UserDto } from './dto/user.dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
+import { UserRole } from './entity/user.entity';
 
-const usersTest = [
+const userMovieIdsTest = {
+  userId: '1',
+  movieId: '2',
+};
+
+const changeRoleTest = {
+  userId: '1',
+  role: UserRole.ADMIN,
+};
+
+export const usersTest = [
   {
     id: '1',
     firstName: 'Oleg',
     lastName: 'Ivanovich',
     email: 'Oleg@mail.ru',
     password: '20012002',
+    role: UserRole.USER,
+    comments: [],
+    favorites: [],
   },
   {
     id: '2',
@@ -21,6 +34,9 @@ const usersTest = [
     lastName: 'Ivanovich',
     email: 'Ivan@mail.ru',
     password: '20012002',
+    role: UserRole.ADMIN,
+    comments: [],
+    favorites: [],
   },
   {
     id: '3',
@@ -28,6 +44,36 @@ const usersTest = [
     lastName: 'Ivanovich',
     email: 'Lena@mail.ru',
     password: '20012002',
+    role: UserRole.USER,
+    comments: [],
+    favorites: [],
+  },
+];
+
+export const moviesTest = [
+  {
+    id: '1',
+    title: 'Transformers',
+    genre: 'romance',
+    image: 'movie_website/image/Oblivion.png',
+    video: 'movie_website/video/Обливион.mp4',
+    comments: [],
+  },
+  {
+    id: '2',
+    title: 'Saving Private Ryan',
+    genre: 'drama',
+    image: 'movie_website/image/Oblivion.png',
+    video: 'movie_website/video/Обливион.mp4',
+    comments: [],
+  },
+  {
+    id: '3',
+    title: 'La-La-Lend',
+    genre: 'romance',
+    image: 'movie_website/image/Oblivion.png',
+    video: 'movie_website/video/Обливион.mp4',
+    comments: [],
   },
 ];
 
@@ -45,6 +91,15 @@ describe('UserService', () => {
     delete: jest.fn(),
   };
 
+  const mockMovieRepository = {
+    findOne: jest.fn(),
+    getById: jest.fn(),
+  };
+
+  const mockJwtRepository = {
+    sign: jest.fn(() => 'signed-token'),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -55,11 +110,11 @@ describe('UserService', () => {
         },
         {
           provide: MovieService,
-          useValue: jest.fn(),
+          useValue: mockMovieRepository,
         },
         {
           provide: JwtService,
-          useValue: jest.fn(),
+          useValue: mockJwtRepository,
         },
       ],
     }).compile();
@@ -146,6 +201,102 @@ describe('UserService', () => {
   });
 
   describe('addMovieToFav()', () => {
-    it('Successfully adds movie to favorites', async () => {});
+    it('Successfully adds movie to favorites', async () => {
+      mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+      mockMovieRepository.getById.mockReturnValue(moviesTest[1]);
+      mockUserRepository.save.mockReturnValue(usersTest[0]);
+
+      const user = await userService.addMovieToFav(userMovieIdsTest);
+
+      expect(user).toEqual(usersTest[0]);
+    });
+  });
+
+  describe('changeUserRole()', () => {
+    it('Successfully changes role of user', async () => {
+      mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+      mockUserRepository.save.mockReturnValue(usersTest[0]);
+      mockJwtRepository.sign.mockReturnValue('signed-token');
+
+      const changeRole = await userService.changeUserRole(changeRoleTest);
+
+      expect(changeRole).toEqual({ user: usersTest[0], token: 'signed-token' });
+    });
+  });
+
+  describe('updateUser()', () => {
+    it('Successfully updates user', async () => {
+      mockUserRepository.update.mockReturnValue(usersTest[2]);
+
+      const { id, password, comments, favorites, ...user } = usersTest[2];
+
+      const userUpd = await userService.updateUser(usersTest[0].id, user);
+
+      expect(userUpd).toEqual(usersTest[2]);
+    });
+
+    it('Fail to update user (User not found)', async () => {
+      const { id, password, comments, favorites, ...user } = usersTest[2];
+
+      await expect(userService.updateUser(null, user)).rejects.toThrow(
+        'User not found',
+      );
+    });
+
+    it('Fail to update user (Body is required)', async () => {
+      const { id, password, comments, favorites, ...user } = usersTest[2];
+
+      await expect(userService.updateUser('2', null)).rejects.toThrow(
+        'Body is required',
+      );
+    });
+  });
+
+  describe('removeMovieFromFav()', () => {
+    it('Successfully deletes movie from favorites', async () => {
+      mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+
+      const user = await userService.removeMovieFromFav(userMovieIdsTest);
+
+      expect(user).toEqual(true);
+    });
+
+    it('Fail to deletes movie from favorites (User not found)', async () => {
+      mockUserRepository.findOne.mockRejectedValue(
+        new HttpException('User not found', HttpStatus.NOT_FOUND),
+      );
+
+      await expect(
+        userService.removeMovieFromFav({ userId: '', movieId: '2' }),
+      ).rejects.toThrow('User not found');
+    });
+
+    it('Fail to deletes movie from favorites (Movie not found)', async () => {
+      mockUserRepository.findOne.mockRejectedValue(
+        new HttpException('Movie not found', HttpStatus.NOT_FOUND),
+      );
+
+      await expect(
+        userService.removeMovieFromFav({ userId: '2', movieId: '' }),
+      ).rejects.toThrow('Movie not found');
+    });
+  });
+
+  describe('deleteUser()', () => {
+    it('Successfully deletes user', async () => {
+      mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+
+      expect(await userService.deleteUser(usersTest[0].id)).toEqual(true);
+    });
+
+    it('Fail to deletes user (User not found)', async () => {
+      mockUserRepository.findOne.mockRejectedValue(
+        new HttpException('User not found', HttpStatus.NOT_FOUND),
+      );
+
+      await expect(userService.deleteUser('')).rejects.toThrow(
+        'User not found',
+      );
+    });
   });
 });

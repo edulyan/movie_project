@@ -12,7 +12,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
-import { UserDto } from './dto/user.dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { UserRole } from './entity/user.entity';
 import { UserService } from './user.service';
@@ -25,11 +24,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   async getAll() {
-    try {
-      return await this.userService.getAll();
-    } catch (error) {
-      return error;
-    }
+    return await this.userService.getAll();
   }
 
   @UseGuards(JwtAuthGuard)
@@ -46,32 +41,20 @@ export class UserController {
 
   @Post('/changeUserRole')
   async changeUserRole(@Body() changeRole: ChangeRoleDto) {
-    try {
-      return await this.userService.changeUserRole(changeRole);
-    } catch (error) {
-      return error;
-    }
+    return await this.userService.changeUserRole(changeRole);
   }
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':id')
   async updateUser(@Param('id') id: string, @Body() user: UserDtoUpd) {
-    try {
-      return await this.userService.updateUser(id, user);
-    } catch (error) {
-      return error;
-    }
+    return await this.userService.updateUser(id, user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('/removeMovieFromFav')
   async removeMovieFromFav(@Body() dto: UserMovieIdsDto) {
-    try {
-      return await this.userService.removeMovieFromFav(dto);
-    } catch (error) {
-      return error;
-    }
+    return await this.userService.removeMovieFromFav(dto);
   }
 
   @Roles(UserRole.ADMIN)

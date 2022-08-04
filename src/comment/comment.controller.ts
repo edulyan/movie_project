@@ -20,21 +20,13 @@ export class CommentController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async createComment(@Body() comment: CommentDto) {
-    try {
-      return await this.commentService.createComment(comment);
-    } catch (error) {
-      return error;
-    }
+    return await this.commentService.createComment(comment);
   }
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   async deleteComment(@Param('id') id: string) {
-    try {
-      return await this.commentService.deleteComment(id);
-    } catch (error) {
-      return error;
-    }
+    return await this.commentService.deleteComment(id);
   }
 }

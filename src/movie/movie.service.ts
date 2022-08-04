@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileService, FileType } from '../file/file.service';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { MovieDto } from './dto/movie.dto';
 import { Movie } from './entity/movie.entity';
 
@@ -19,7 +19,6 @@ export class MovieService {
         skip: offset,
       });
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Failed to get movies',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -31,6 +30,7 @@ export class MovieService {
     const movie = await this.movieRepository.findOne(id, {
       relations: ['comments'],
     });
+
     if (!movie) {
       throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
     }
@@ -39,19 +39,11 @@ export class MovieService {
   }
 
   async search(title: string): Promise<Movie[]> {
-    try {
-      const found = await this.movieRepository.find({
-        where: { title: title },
-      });
+    const found = await this.movieRepository.find({
+      where: { title: title },
+    });
 
-      return found;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to search movie',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return found;
   }
 
   async createMovie(
@@ -84,44 +76,19 @@ export class MovieService {
     }
   }
 
-  async updateMovie(id: string, movie: MovieDto): Promise<MovieDto> {
-    try {
-      await this.movieRepository
-        .update(id, movie)
-        .catch((movie: MovieDto) => {
-          if (!movie) {
-            throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
-          }
-        })
-        .catch((err: string) => {
-          if (err) {
-            throw new HttpException(
-              'Failed to update movie',
-              HttpStatus.INTERNAL_SERVER_ERROR,
-            );
-          }
-        });
-
-      return movie;
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to update movie',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+  async updateMovie(id: string, movie: MovieDto): Promise<UpdateResult | void> {
+    return await this.movieRepository.update(id, movie);
   }
 
-  async deleteMovie(id: string): Promise<void> {
+  async deleteMovie(id: string): Promise<boolean> {
     const movie = await this.movieRepository.findOne(id);
 
     if (!movie) {
-      throw new HttpException(
-        'Movie not found to deletion',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
     }
 
     await this.movieRepository.delete(movie.id);
+
+    return true;
   }
 }
