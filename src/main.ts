@@ -9,7 +9,7 @@ async function bootstrap() {
   app.use(cookieParser());
   // app.useGlobalInterceptors(new ChangeInterceptor());
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT;
 
   await app.listen(PORT, () => console.log(`App is listening on ${PORT}...`));
 }

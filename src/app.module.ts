@@ -14,7 +14,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '../.env',
+      envFilePath: '.env',
     }),
     ServeStaticModule.forRoot({ rootPath: path.resolve(__dirname, 'static') }),
     TypeOrmModule.forRoot(ConfigPG),
