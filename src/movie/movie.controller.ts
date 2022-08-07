@@ -18,11 +18,14 @@ import { MovieService } from './movie.service';
 import { Roles } from '../decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { SomeInterceptor } from '../interceptors/some.interceptor';
+import { ChangeInterceptor } from '../interceptors/change.interceptor';
 
 @Controller('movie')
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
+  // @UseInterceptors(SomeInterceptor)
   @Get()
   async getAll(@Query('count') count: number, @Query('offset') offset: number) {
     return await this.movieService.getAll(count, offset);
@@ -46,6 +49,7 @@ export class MovieController {
       { name: 'image', maxCount: 1 },
       { name: 'video', maxCount: 1 },
     ]),
+    ChangeInterceptor,
   )
   async createMovie(@UploadedFiles() files, @Body() movieDto: MovieDto) {
     const { image, video } = files;
