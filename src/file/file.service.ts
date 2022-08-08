@@ -15,6 +15,10 @@ export class FileService {
       const fileExtension = file.originalname.split('.').pop();
       const fileName = uuid.v4() + '.' + fileExtension;
       const filePath = path.resolve(__dirname, '..', 'static', type);
+      console.log(`FileExtension - ${fileExtension}`);
+      console.log(`FileName - ${fileName}`);
+      console.log(`FilePAth - ${filePath}`);
+
       if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath, { recursive: true });
       }
@@ -23,5 +27,16 @@ export class FileService {
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  deleteFile(file: string) {
+    const fileName = file.split('/').pop();
+    const fileType = file.split('/').shift();
+    const filePath = path.resolve(__dirname, '..', 'static', fileType);
+
+    fs.unlink(filePath + '/' + fileName, (err) => {
+      if (err) throw err;
+      console.log(`${file} - file was deleted`);
+    });
   }
 }

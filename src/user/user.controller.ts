@@ -36,10 +36,7 @@ export class UserController {
   @LogPropLength
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async getById(
-    @Param('id')
-    id: string,
-  ) {
+  async getById(@Param('id') id: string) {
     return await this.userService.getById(id);
   }
 

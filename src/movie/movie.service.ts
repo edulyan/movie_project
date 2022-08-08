@@ -88,6 +88,8 @@ export class MovieService {
     }
 
     await this.movieRepository.delete(movie.id);
+    this.fileService.deleteFile(movie.image);
+    this.fileService.deleteFile(movie.video);
 
     return true;
   }
