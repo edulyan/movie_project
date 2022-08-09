@@ -11,6 +11,7 @@ export const ConfigPG: TypeOrmModuleOptions = {
   synchronize: true,
   migrationsRun: false,
   logging: false,
+  cache: { type: 'redis' },
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/migrations',

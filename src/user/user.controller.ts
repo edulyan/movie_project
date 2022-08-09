@@ -1,12 +1,15 @@
 import {
   Body,
+  CacheInterceptor,
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CountFunc } from '../decorators/сountFunc.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -19,12 +22,15 @@ import { UserService } from './user.service';
 import { LogPropLength } from '../decorators/logProp.decorator';
 
 @CountFunc
+@UseInterceptors(CacheInterceptor)
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  private logger = new Logger(UserController.name);
 
   @LogPropLength
   length: string;
+
+  constructor(private readonly userService: UserService) {}
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)

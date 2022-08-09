@@ -6,6 +6,7 @@ import { User } from './entity/user.entity';
 import { MovieModule } from '../movie/movie.module';
 import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { RedisCacheModule } from '../cache/redisCache.module';
 
 @Module({
   providers: [UserService],
@@ -20,6 +21,7 @@ import { JwtModule } from '@nestjs/jwt';
     TypeOrmModule.forFeature([User]),
     MovieModule,
     AuthModule,
+    RedisCacheModule,
   ],
   exports: [UserService],
 })
