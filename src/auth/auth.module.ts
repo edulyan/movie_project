@@ -6,6 +6,7 @@ import { MovieModule } from '../movie/movie.module';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { MailModule } from '../mailer/mailer.module';
 
 @Module({
   controllers: [AuthController],
@@ -20,6 +21,7 @@ import { AuthService } from './auth.service';
     TypeOrmModule.forFeature([User]),
     forwardRef(() => UserModule),
     forwardRef(() => MovieModule),
+    MailModule,
   ],
   exports: [JwtModule, AuthService],
 })

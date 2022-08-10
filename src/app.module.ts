@@ -9,7 +9,10 @@ import { CommentModule } from './comment/comment.module';
 import { FileModule } from './file/file.module';
 import * as path from 'path';
 import { ConfigModule } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { RedisCacheModule } from './cache/redisCache.module';
+import { MailModule } from './mailer/mailer.module';
+import MailConfig from './config/mailer.config';
 
 @Module({
   imports: [
@@ -22,12 +25,14 @@ import { RedisCacheModule } from './cache/redisCache.module';
     CacheModule.register({
       isGlobal: true,
     }),
+    MailerModule.forRoot(MailConfig),
     UserModule,
     AuthModule,
     MovieModule,
     CommentModule,
     FileModule,
     RedisCacheModule,
+    MailModule,
   ],
   controllers: [],
   providers: [],

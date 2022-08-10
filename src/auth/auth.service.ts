@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entity/user.entity';
 import { Repository } from 'typeorm';
+import { MailService } from '../mailer/mailer.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     @InjectRepository(User) private userRepository: Repository<User>,
     private userService: UserService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async signIn(authDto: AuthDto) {
@@ -66,6 +68,8 @@ export class AuthService {
     const token = this.jwtService.sign({ id: data.id, role: data.role });
 
     const { password, ...user } = data;
+
+    await this.mailService.signUpMail(data);
 
     return {
       user,
