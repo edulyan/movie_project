@@ -48,7 +48,7 @@ export class UserService {
 
       const cachedUsers = await this.redisCacheService.get('cached_users');
 
-      console.log(cachedUsers);
+      // console.log(cachedUsers);
 
       return users;
     } catch (error) {

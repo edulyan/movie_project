@@ -33,6 +33,11 @@ export class AuthController {
     return await this.authService.signUp(userDto);
   }
 
+  @Post('/forgotPass')
+  async forgotPass(@Body() authDto: AuthDto) {
+    return await this.authService.forgotPass(authDto);
+  }
+
   @Post('/logout')
   async logOut(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('jwtToken');

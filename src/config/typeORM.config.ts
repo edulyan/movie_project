@@ -10,7 +10,7 @@ export const ConfigPG: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
   migrationsRun: false,
-  logging: false,
+  logging: ['error', 'warn'],
   cache: { type: 'redis' },
   migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
   cli: {

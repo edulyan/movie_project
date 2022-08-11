@@ -69,11 +69,23 @@ export class AuthService {
 
     const { password, ...user } = data;
 
-    await this.mailService.signUpMail(data);
+    await this.mailService.signUpMail({ ...data, password: userDto.password });
 
     return {
       user,
       token,
     };
+  }
+
+  async forgotPass(authDto: AuthDto) {
+    const user = await this.userService.getByEmail(authDto.email);
+
+    const hashPass = await bcrypt.hash(authDto.password, 5);
+
+    user.password = hashPass;
+
+    await this.mailService.forgotPassMail(authDto);
+
+    return await this.userRepository.save(user);
   }
 }
