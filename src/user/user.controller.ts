@@ -17,6 +17,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
+import { PurseDto } from '../purse/dto/createPurse.dto';
 import { UserRole } from './entity/user.entity';
 import { UserService } from './user.service';
 import { LogPropLength } from '../decorators/logProp.decorator';
@@ -44,6 +45,15 @@ export class UserController {
   @Get(':id')
   async getById(@Param('id') id: string) {
     return await this.userService.getById(id);
+  }
+
+  @Post('/addMoney')
+  async addMoney(@Body() purseDto: PurseDto) {
+    try {
+      return await this.userService.addMoney(purseDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @UseGuards(JwtAuthGuard)

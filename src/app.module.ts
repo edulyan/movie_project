@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { RedisCacheModule } from './cache/redisCache.module';
 import { MailModule } from './mailer/mailer.module';
+import { PurseModule } from './purse/purse.module';
 import MailConfig from './config/mailer.config';
 
 @Module({
@@ -33,6 +34,7 @@ import MailConfig from './config/mailer.config';
     FileModule,
     RedisCacheModule,
     MailModule,
+    PurseModule,
   ],
   controllers: [],
   providers: [],

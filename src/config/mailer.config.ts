@@ -2,16 +2,16 @@ import { MailerModule } from '@nestjs-modules/mailer';
 
 export const MailConfig: MailerModule = {
   transport: {
-    host: process.env.MAILER_HOST,
-    port: parseInt(process.env.MAILER_PORT),
+    host: 'smtp.mail.ru',
+    port: 465,
     secure: true,
     auth: {
-      user: process.env.MAILER_USER,
-      pass: process.env.MAILER_PASSWORD,
+      user: 'mnatik94@mail.ru',
+      pass: 'jYFrq6UkEyckjN67rcjM',
     },
   },
   defaults: {
-    from: `Movie-Website <${process.env.MAILER_USER}>`,
+    from: `Movie-Website <mnatik94@mail.ru>`,
   },
 };
 

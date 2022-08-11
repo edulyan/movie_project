@@ -16,6 +16,7 @@ import { User } from './entity/user.entity';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
 import { Cache } from 'cache-manager';
+import { PurseDto } from 'src/purse/dto/createPurse.dto';
 
 @Injectable()
 export class UserService {
@@ -32,7 +33,7 @@ export class UserService {
   async getAll(): Promise<User[]> {
     try {
       const users = await this.userRepository
-        .find({ cache: true })
+        .find({ relations: ['purses'], cache: true })
         .finally(() => {
           this.logger.log(
             `${UserService.prototype.getAll.name}() - Successfully found users`,
@@ -64,7 +65,7 @@ export class UserService {
 
   async getById(id: string): Promise<User> {
     const user = await this.userRepository.findOne(id, {
-      relations: ['comments', 'favorites'],
+      relations: ['comments', 'favorites', 'purses'],
     });
 
     if (!user) {
@@ -103,6 +104,19 @@ export class UserService {
     const newUser = await this.userRepository.create(userDto);
 
     return await this.userRepository.save(newUser);
+  }
+
+  async addMoney(purseDto: PurseDto): Promise<string> {
+    const user = await this.getById(purseDto.userId);
+
+    const lastBalance = user.purses[0].balance;
+
+    user.purses[0].balance += purseDto.balance;
+    console.log(user);
+
+    await this.userRepository.save(user, { reload: true });
+
+    return `Balance: ${lastBalance} + ${purseDto.balance} = ${user.purses[0].balance}`;
   }
 
   async addMovieToFav(dto: UserMovieIdsDto): Promise<User> {
