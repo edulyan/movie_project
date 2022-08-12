@@ -47,6 +47,7 @@ describe('MovieService', () => {
 
   const mockFileRepository = {
     createFile: jest.fn(),
+    deleteFile: jest.fn(),
   };
 
   beforeAll(async () => {

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { MovieService } from '../movie/movie.service';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 import { UserRole } from './entity/user.entity';
+import { RedisCacheService } from '../cache/redisCache.service';
 
 const userMovieIdsTest = {
   userId: '1',
@@ -27,6 +28,7 @@ export const usersTest = [
     role: UserRole.USER,
     comments: [],
     favorites: [],
+    purses: [],
   },
   {
     id: '2',
@@ -37,6 +39,7 @@ export const usersTest = [
     role: UserRole.ADMIN,
     comments: [],
     favorites: [],
+    purses: [],
   },
   {
     id: '3',
@@ -47,6 +50,7 @@ export const usersTest = [
     role: UserRole.USER,
     comments: [],
     favorites: [],
+    purses: [],
   },
 ];
 
@@ -81,6 +85,8 @@ describe('UserService', () => {
   let userService: UserService;
   let movieService: MovieService;
   let jwtService: JwtService;
+  let redisCacheService: RedisCacheService;
+  const logger = new Logger(UserService.name);
 
   const mockUserRepository = {
     find: jest.fn(),
@@ -100,6 +106,11 @@ describe('UserService', () => {
     sign: jest.fn(() => 'signed-token'),
   };
 
+  const mockRedisCacheRepository = {
+    get: jest.fn(),
+    set: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -116,6 +127,10 @@ describe('UserService', () => {
           provide: JwtService,
           useValue: mockJwtRepository,
         },
+        {
+          provide: RedisCacheService,
+          useValue: mockRedisCacheRepository,
+        },
       ],
     }).compile();
 
@@ -126,7 +141,7 @@ describe('UserService', () => {
 
   describe('getAll()', () => {
     it('Successfully gets all users', async () => {
-      mockUserRepository.find.mockReturnValue(usersTest);
+      mockUserRepository.find.mockResolvedValue(usersTest);
 
       const getUsers = await userService.getAll();
 
@@ -204,7 +219,7 @@ describe('UserService', () => {
     it('Successfully adds movie to favorites', async () => {
       mockUserRepository.findOne.mockReturnValue(usersTest[0]);
       mockMovieRepository.getById.mockReturnValue(moviesTest[1]);
-      mockUserRepository.save.mockReturnValue(usersTest[0]);
+      mockUserRepository.save.mockResolvedValue(usersTest[0]);
 
       const user = await userService.addMovieToFav(userMovieIdsTest);
 
@@ -226,7 +241,7 @@ describe('UserService', () => {
 
   describe('updateUser()', () => {
     it('Successfully updates user', async () => {
-      mockUserRepository.update.mockReturnValue(usersTest[2]);
+      mockUserRepository.update.mockResolvedValue(usersTest[2]);
 
       const { id, password, comments, favorites, ...user } = usersTest[2];
 
@@ -255,6 +270,7 @@ describe('UserService', () => {
   describe('removeMovieFromFav()', () => {
     it('Successfully deletes movie from favorites', async () => {
       mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+      mockUserRepository.save.mockResolvedValue(usersTest[0]);
 
       const user = await userService.removeMovieFromFav(userMovieIdsTest);
 
@@ -285,6 +301,7 @@ describe('UserService', () => {
   describe('deleteUser()', () => {
     it('Successfully deletes user', async () => {
       mockUserRepository.findOne.mockReturnValue(usersTest[0]);
+      mockUserRepository.delete.mockResolvedValue(usersTest[0]);
 
       expect(await userService.deleteUser(usersTest[0].id)).toEqual(true);
     });

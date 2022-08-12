@@ -68,11 +68,7 @@ export class MovieService {
 
       return await this.movieRepository.save(movie);
     } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to create movie',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

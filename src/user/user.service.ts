@@ -23,7 +23,7 @@ export class UserService {
   private logger = new Logger(UserService.name);
 
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    // @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly movieService: MovieService,
     private readonly jwtService: JwtService,
@@ -53,13 +53,8 @@ export class UserService {
 
       return users;
     } catch (error) {
-      this.logger.error(
-        `${UserService.prototype.getAll.name}() - Failed to get users`,
-      );
-      throw new HttpException(
-        'Failed to get users',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      this.logger.error(`${UserService.prototype.getAll.name}() - ${error}`);
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

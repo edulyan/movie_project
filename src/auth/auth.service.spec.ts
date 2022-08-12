@@ -4,7 +4,7 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/entity/user.entity';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { usersTest } from '../user/user.service.spec';
+import { MailService } from '../mailer/mailer.service';
 
 export const userTest = {
   firstName: 'Don',
@@ -19,6 +19,7 @@ describe('AuthService', () => {
   let authService: AuthService;
   let userService: UserService;
   let jwtService: JwtService;
+  let mailService: MailService;
 
   const mockUserRepository = {
     findOne: jest.fn(),
@@ -30,6 +31,11 @@ describe('AuthService', () => {
 
   const mockJwtRepository = {
     sign: jest.fn(() => 'signed-token'),
+  };
+
+  const mockMailRepository = {
+    signUpMail: jest.fn(),
+    forgotPassMail: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -47,6 +53,10 @@ describe('AuthService', () => {
         {
           provide: JwtService,
           useValue: mockJwtRepository,
+        },
+        {
+          provide: MailService,
+          useValue: mockMailRepository,
         },
       ],
     }).compile();
