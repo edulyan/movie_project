@@ -1,0 +1,63 @@
+<div class="register-main">
+  <div class="register-main-title">
+    <h1 class="title-main">Регистрация</h1>
+  </div>
+
+  <div class="register-fields">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="input-firstname">
+          <mat-form-field [style.width.px]="280" appearance="fill">
+            <mat-label>Введите ваш firstname</mat-label>
+            <input matInput placeholder="123@example.com" required />
+            <mat-error>Это поле обязательно</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="input-lastName">
+          <mat-form-field [style.width.px]="280" appearance="fill">
+            <mat-label>Введите ваш lastname</mat-label>
+            <input matInput placeholder="123@example.com" required />
+            <mat-error>Это поле обязательно</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="input-email">
+          <mat-form-field [style.width.px]="280" appearance="fill">
+            <mat-label>Введите ваш email</mat-label>
+            <input matInput placeholder="123@example.com" required />
+            <mat-error>Это поле обязательно</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="input-password">
+          <mat-form-field [style.width.px]="280" appearance="fill">
+            <mat-label>Введите ваш password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" />
+            <mat-error>Это поле обязательно</mat-error>
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="register-button-enter">
+        <button
+          mat-raised-button
+          color="warn"
+          [disabled]="formGroup.invalid"
+          type="button"
+        >
+          ЗАРЕГИСТРИРОВАТЬСЯ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

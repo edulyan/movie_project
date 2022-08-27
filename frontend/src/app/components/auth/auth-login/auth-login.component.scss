@@ -1,0 +1,34 @@
+::ng-deep .mat-form-field {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+::ng-deep .mat-raised-button {
+  height: 50px;
+  width: 180px;
+  font-size: 20px;
+  border-radius: 0px !important;
+}
+
+.login-main {
+  text-align: center;
+
+  .login-main-title {
+    margin-top: 200px;
+
+    .title-main {
+      font-size: 60px;
+      font-weight: bold;
+    }
+  }
+
+  .login-fields {
+    .row {
+      margin-top: 80px;
+    }
+  }
+
+  .login-button-enter {
+    margin-top: 10px;
+  }
+}
