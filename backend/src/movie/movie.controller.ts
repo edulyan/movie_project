@@ -12,14 +12,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UserRole } from '../user/entity/user.entity';
-import { RolesGuard } from '../auth/guards/roles.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { MovieDto } from './dto/movie.dto';
 import { MovieService } from './movie.service';
-import { Roles } from '../decorators/roles.decorator';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Roles } from '../common/decorators/roles.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { SomeInterceptor } from '../interceptors/some.interceptor';
-import { ChangeInterceptor } from '../interceptors/change.interceptor';
+import { SomeInterceptor } from '../common/interceptors/some.interceptor';
+import { ChangeInterceptor } from '../common/interceptors/change.interceptor';
 
 @Controller('movie')
 export class MovieController {

@@ -32,7 +32,7 @@ export class UserService {
   async getAll(): Promise<User[]> {
     try {
       const users = await this.userRepository
-        .find({ relations: ['purses'], cache: true })
+        .find({ cache: true })
         .finally(() => {
           this.logger.log(
             `${UserService.prototype.getAll.name}() - Successfully found users`,
@@ -59,7 +59,7 @@ export class UserService {
 
   async getById(id: string): Promise<User> {
     const user = await this.userRepository.findOne(id, {
-      relations: ['comments', 'favorites', 'purses'],
+      relations: ['comments', 'favorites'],
     });
 
     if (!user) {

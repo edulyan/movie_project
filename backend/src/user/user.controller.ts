@@ -11,15 +11,15 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CountFunc } from '../decorators/сountFunc.decorator';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../decorators/roles.decorator';
+import { CountFunc } from '../common/decorators/сountFunc.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
 import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { UserRole } from './entity/user.entity';
 import { UserService } from './user.service';
-import { LogPropLength } from '../decorators/logProp.decorator';
+import { LogPropLength } from '../common/decorators/logProp.decorator';
 import { EventEmit } from './event-emitter';
 
 @CountFunc
