@@ -2,8 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileService, FileType } from '../file/file.service';
 import { Repository, UpdateResult } from 'typeorm';
-import { MovieDto } from './dto/movie.dto';
+import { CreateMovieDto } from './dto/createMovie.dto';
 import { Movie } from './entity/movie.entity';
+import { UpdateMovieDto } from './dto/updateMovie.dto';
 
 @Injectable()
 export class MovieService {
@@ -47,7 +48,7 @@ export class MovieService {
   }
 
   async createMovie(
-    movieDto: MovieDto,
+    movieDto: CreateMovieDto,
     image: string,
     video: string,
   ): Promise<Movie> {
@@ -72,7 +73,16 @@ export class MovieService {
     }
   }
 
-  async updateMovie(id: string, movie: MovieDto): Promise<UpdateResult | void> {
+  async updateMovie(
+    id: string,
+    movie: UpdateMovieDto,
+  ): Promise<UpdateResult | void> {
+    const movieOne = await this.getById(id);
+
+    if (!movieOne) {
+      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+    }
+
     return await this.movieRepository.update(id, movie);
   }
 

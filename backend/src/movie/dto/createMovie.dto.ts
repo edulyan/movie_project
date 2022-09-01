@@ -1,7 +1,7 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Genre } from '../entity/movie.entity';
 
-export class MovieDto {
+export class CreateMovieDto {
   @IsNotEmpty({
     message: 'Firstname is required',
   })
@@ -9,6 +9,20 @@ export class MovieDto {
     message: 'Firstname must be a string',
   })
   readonly title: string;
+
+  @IsNotEmpty({
+    message: 'Description is required',
+  })
+  @IsString({
+    message: 'Description must be a string',
+  })
+  readonly description?: string;
+
+  readonly year?: number;
+
+  readonly averageRating?: number;
+
+  readonly voteCount?: number;
 
   @IsNotEmpty({
     message: 'Genre is required',

@@ -1,7 +1,7 @@
 import { UserRole } from '../src/user/entity/user.entity';
 import { ChangeRoleDto } from '../src/user/dto/add-change.dto';
 import { UserDto } from '../src/user/dto/user.dto';
-import { MovieDto } from '../src/movie/dto/movie.dto';
+import { CreateMovieDto } from '../src/movie/dto/createMovie.dto';
 import { Genre } from '../src/movie/entity/movie.entity';
 
 export const createUserTest: UserDto = {
@@ -16,7 +16,7 @@ export const changeRoleToUserTest: ChangeRoleDto = {
   role: UserRole.ADMIN,
 };
 
-export const createMovieTest: MovieDto = {
+export const createMovieTest: CreateMovieDto = {
   title: 'Insidious',
   genre: [Genre.HORROR],
 };

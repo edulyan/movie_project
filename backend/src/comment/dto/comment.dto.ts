@@ -9,6 +9,8 @@ export class CommentDto {
   })
   text: string;
 
+  rating: number;
+
   @IsString({ message: 'UserId must be a string' })
   userId: string;
 

@@ -13,13 +13,14 @@ import {
 } from '@nestjs/common';
 import { UserRole } from '../user/entity/user.entity';
 import { RolesGuard } from '../common/guards/roles.guard';
-import { MovieDto } from './dto/movie.dto';
+import { CreateMovieDto } from './dto/createMovie.dto';
 import { MovieService } from './movie.service';
 import { Roles } from '../common/decorators/roles.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { SomeInterceptor } from '../common/interceptors/some.interceptor';
 import { ChangeInterceptor } from '../common/interceptors/change.interceptor';
+import { UpdateMovieDto } from './dto/updateMovie.dto';
 
 @Controller('movie')
 export class MovieController {
@@ -51,7 +52,7 @@ export class MovieController {
     ]),
     ChangeInterceptor,
   )
-  async createMovie(@UploadedFiles() files, @Body() movieDto: MovieDto) {
+  async createMovie(@UploadedFiles() files, @Body() movieDto: CreateMovieDto) {
     const { image, video } = files;
 
     return await this.movieService.createMovie(movieDto, image[0], video[0]);
@@ -60,7 +61,7 @@ export class MovieController {
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':id')
-  async updateMovie(@Param('id') id: string, @Body() movie: MovieDto) {
+  async updateMovie(@Param('id') id: string, @Body() movie: UpdateMovieDto) {
     return await this.movieService.updateMovie(id, movie);
   }
 

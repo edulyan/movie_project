@@ -41,9 +41,22 @@ export class CommentService {
     const movieOne = await this.movieService.getById(comment.movieId);
     const newComment = await this.commentRepository.create({
       ...comment,
-      username: userOne.firstName + ' ' + userOne.lastName,
       movie: movieOne,
       user: userOne,
+    });
+
+    const voutCount = movieOne.voteCount + 1;
+
+    const result =
+      Math.round(
+        ((movieOne.averageRating * movieOne.voteCount + comment.rating) /
+          voutCount) *
+          10,
+      ) / 10;
+
+    await this.movieService.updateMovie(comment.movieId, {
+      averageRating: result,
+      voteCount: movieOne.voteCount + 1,
     });
 
     return await this.commentRepository.save(newComment);
