@@ -10,6 +10,7 @@ import { LayoutModule } from './components/layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthRegisterModule } from './components/auth/auth-register/auth-register.module';
 import { AuthLoginModule } from './components/auth/auth-login/auth-login.module';
+import { HomeModule } from './components/home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { AuthLoginModule } from './components/auth/auth-login/auth-login.module'
     HeaderModule,
     AuthRegisterModule,
     AuthLoginModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
