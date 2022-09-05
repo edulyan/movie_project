@@ -1,15 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MovieComponent } from './movie.component';
-
-
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../../app-routing.module';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
-  declarations: [
-    MovieComponent
-  ],
+  exports: [MovieComponent],
+  declarations: [MovieComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+  ],
 })
-export class MovieModule { }
+export class MovieModule {}

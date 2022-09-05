@@ -1,0 +1,15 @@
+.movie-main {
+  margin: auto;
+  width: 60%;
+
+  .movie-info {
+    .mat-grid-list {
+      .mat-grid-tile {
+        .movie-img {
+          height: 300px;
+          width: 500px;
+        }
+      }
+    }
+  }
+}

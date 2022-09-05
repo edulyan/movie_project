@@ -21,7 +21,27 @@
     font-size: 25px;
   }
 
-  .homa-main-title {
-    color: rgb(225, 25, 25);
+  .movie-list {
+    .mat-grid-list {
+      .mat-grid-tile {
+        .movie-img {
+          height: 160px;
+          width: 280px;
+          border-radius: 5%;
+        }
+
+        .rating {
+          position: absolute;
+          background: rgb(255, 170, 0);
+          top: 2%;
+          font: bold 20px/30px Helvetica, Sans-Serif;
+          padding: 5px 3%;
+          margin-left: 2%;
+          height: 30px;
+          width: 30px;
+          border-radius: 20%;
+        }
+      }
+    }
   }
 }

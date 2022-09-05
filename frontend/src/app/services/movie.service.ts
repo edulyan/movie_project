@@ -15,7 +15,7 @@ export class MovieService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<IMovie[]> {
-    return this.http.get<IMovie[]>(`${this.URL_MOVIE}`);
+    return this.http.get<IMovie[]>(`${this.URL_MOVIE}?count=10&offset=0`);
   }
 
   search(title: string): Observable<IMovie[]> {

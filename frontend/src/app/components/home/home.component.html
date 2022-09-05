@@ -1,8 +1,31 @@
 <div class="home-main">
-  <div class="form-group">
-    <mat-form-field class="search">
-      <mat-label>Поиск фильмов</mat-label>
-      <input matInput />
-    </mat-form-field>
+  <div *ngIf="getMovies() | async as movieListItem">
+    <div class="form-group">
+      <mat-form-field class="search">
+        <mat-label>Поиск фильмов</mat-label>
+        <input
+          matInput
+          [ngModel]="movie.title"
+          (ngModelChange)="searchMovie($event)"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="movie-list">
+      <mat-grid-list cols="5" rowHeight="400px">
+        <mat-grid-tile *ngFor="let movie of movieListItem">
+          <button type="button" mat-button [routerLink]="['/movie/', movie.id]">
+            <img
+              class="movie-img"
+              mat-card-image
+              [src]="'http://localhost:3000/' + movie.image"
+            />
+            <div class="rating">
+              {{ movie.averageRating }}
+            </div>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
 </div>

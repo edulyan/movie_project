@@ -1,1 +1,16 @@
-<p>movie works!</p>
+<div class="movie-main">
+  <div class="movie-info">
+    <mat-grid-list *ngIf="movie$ | async as movie" cols="3" rowHeight="400px">
+      <mat-grid-tile [colspan]="2"
+        ><img
+          class="movie-img"
+          mat-card-image
+          [src]="'http://localhost:3000/' + movie.image"
+      /></mat-grid-tile>
+      <mat-grid-tile>SECOND</mat-grid-tile>
+      <mat-grid-tile>THIRD</mat-grid-tile>
+      <mat-grid-tile>FOURTH</mat-grid-tile>
+      <mat-grid-tile>FIFTH</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

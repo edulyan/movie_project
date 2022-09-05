@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthRegisterModule } from './components/auth/auth-register/auth-register.module';
 import { AuthLoginModule } from './components/auth/auth-login/auth-login.module';
 import { HomeModule } from './components/home/home.module';
+import { MovieModule } from './components/movie/movie.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { HomeModule } from './components/home/home.module';
     AuthRegisterModule,
     AuthLoginModule,
     HomeModule,
+    MovieModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
