@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FileService, FileType } from '../file/file.service';
+import { FileType } from '../common/enums';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateMovieDto } from './dto/createMovie.dto';
 import { Movie } from './entity/movie.entity';
 import { UpdateMovieDto } from './dto/updateMovie.dto';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class MovieService {

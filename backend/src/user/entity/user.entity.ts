@@ -12,11 +12,7 @@ import {
 } from 'typeorm';
 import { Movie } from '../../movie/entity/movie.entity';
 import { Comment } from '../../comment/entity/comment.entity';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from '../../common/enums';
 
 @Entity()
 export class User {

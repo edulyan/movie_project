@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Genre } from '../entity/movie.entity';
+import { Genre } from '../../common/enums';
 
 export class UpdateMovieDto {
   @IsNotEmpty({

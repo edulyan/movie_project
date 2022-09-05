@@ -1,4 +1,4 @@
-import { UserRole } from '../entity/user.entity';
+import { UserRole } from '../../common/enums';
 
 export class UserMovieIdsDto {
   readonly userId: string;

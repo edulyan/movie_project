@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { UserRole } from '../entity/user.entity';
+import { UserRole } from '../../common/enums';
 
 export class UserDtoUpd {
   @IsNotEmpty({

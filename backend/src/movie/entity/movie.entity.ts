@@ -7,16 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Comment } from '../../comment/entity/comment.entity';
-
-export enum Genre {
-  ACTION = 'action',
-  COMEDY = 'comedy',
-  DRAMA = 'drama',
-  FANTASY = 'fantasy',
-  HORROR = 'horror',
-  ROMANCE = 'romance',
-  THRILLER = 'thriller',
-}
+import { Country, Genre } from '../../common/enums';
 
 @Entity()
 export class Movie {
@@ -30,7 +21,26 @@ export class Movie {
   description: string;
 
   @Column()
+  director: string;
+
+  @Column()
   year: number;
+
+  @Column()
+  ageRating: string;
+
+  @Column()
+  runTime: string;
+
+  @Column()
+  budget: number;
+
+  @Column({
+    type: 'enum',
+    enum: Country,
+    array: true,
+  })
+  country: Country[];
 
   @Column({
     type: 'enum',

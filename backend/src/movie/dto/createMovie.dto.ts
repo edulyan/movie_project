@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Genre } from '../entity/movie.entity';
+import { Genre } from '../../common/enums';
 
 export class CreateMovieDto {
   @IsNotEmpty({
@@ -16,13 +16,21 @@ export class CreateMovieDto {
   @IsString({
     message: 'Description must be a string',
   })
-  readonly description?: string;
+  readonly description: string;
 
-  readonly year?: number;
+  readonly director: string;
 
-  readonly averageRating?: number;
+  readonly year: number;
 
-  readonly voteCount?: number;
+  readonly ageRating: string;
+
+  readonly runTime: string;
+
+  readonly budget: number;
+
+  readonly averageRating: number;
+
+  readonly voteCount: number;
 
   @IsNotEmpty({
     message: 'Genre is required',

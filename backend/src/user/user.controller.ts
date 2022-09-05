@@ -17,7 +17,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
-import { UserRole } from './entity/user.entity';
+import { UserRole } from '../common/enums';
 import { UserService } from './user.service';
 import { LogPropLength } from '../common/decorators/logProp.decorator';
 import { EventEmit } from './event-emitter';

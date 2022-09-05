@@ -11,7 +11,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { UserRole } from '../user/entity/user.entity';
+import { UserRole } from '../common/enums';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CreateMovieDto } from './dto/createMovie.dto';
 import { MovieService } from './movie.service';
