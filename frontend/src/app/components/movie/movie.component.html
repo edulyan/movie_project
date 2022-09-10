@@ -1,16 +1,45 @@
 <div class="movie-main">
   <div class="movie-info">
-    <mat-grid-list *ngIf="movie$ | async as movie" cols="3" rowHeight="400px">
-      <mat-grid-tile [colspan]="2"
-        ><img
+    <mat-grid-list *ngIf="movie$ | async as movie" cols="3" rowHeight="439px">
+      <mat-grid-tile [colspan]="1">
+        <img
           class="movie-img"
           mat-card-image
           [src]="'http://localhost:3000/' + movie.image"
-      /></mat-grid-tile>
-      <mat-grid-tile>SECOND</mat-grid-tile>
-      <mat-grid-tile>THIRD</mat-grid-tile>
-      <mat-grid-tile>FOURTH</mat-grid-tile>
-      <mat-grid-tile>FIFTH</mat-grid-tile>
+        />
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2"></mat-grid-tile>
+
+      <mat-grid-tile [colspan]="2">
+        <div class="movie-detail">
+          <div class="movie-detail-header">
+            <mat-list class="movie-detail-header" role="list">
+              <mat-list-item role="listitem">
+                <h1 class="about-movie">О фильме</h1>
+              </mat-list-item>
+              <mat-list-item role="listitem">Год производства</mat-list-item>
+              <mat-list-item role="listitem">Страна</mat-list-item>
+              <mat-list-item role="listitem">Жанр</mat-list-item>
+              <mat-list-item role="listitem">Режиссер</mat-list-item>
+              <mat-list-item role="listitem">Бюджет</mat-list-item>
+            </mat-list>
+          </div>
+          <div class="movie-detail-data">
+            <mat-list class="movie-detail-data" role="list">
+              <mat-list-item role="listitem"></mat-list-item>
+              <mat-list-item role="listitem">{{ movie.year }}</mat-list-item>
+              <mat-list-item role="listitem">{{ movie.country }}</mat-list-item>
+              <mat-list-item role="listitem">{{ movie.genre }}</mat-list-item>
+              <mat-list-item role="listitem">{{
+                movie.director
+              }}</mat-list-item>
+              <mat-list-item role="listitem">${{ movie.budget }}</mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile [style.background]="'blue'">FIFTH</mat-grid-tile>
     </mat-grid-list>
   </div>
 </div>

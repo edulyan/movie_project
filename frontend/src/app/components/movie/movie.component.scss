@@ -1,13 +1,38 @@
 .movie-main {
   margin: auto;
-  width: 60%;
+  width: 80%;
 
   .movie-info {
     .mat-grid-list {
       .mat-grid-tile {
         .movie-img {
-          height: 300px;
-          width: 500px;
+          height: 440px;
+          width: 770px;
+        }
+
+        .movie-detail {
+          display: flex;
+          font-size: 24px;
+
+          .about-movie {
+            color: rgb(255, 255, 255);
+            margin-bottom: 50px;
+            font-size: 30px;
+          }
+
+          .movie-detail-header {
+            margin-right: 30px;
+
+            .mat-list-item {
+              color: rgba(255, 255, 255, 0.6);
+            }
+          }
+
+          .movie-detail-data {
+            .mat-list-item {
+              color: rgba(255, 255, 255, 0.6);
+            }
+          }
         }
       }
     }

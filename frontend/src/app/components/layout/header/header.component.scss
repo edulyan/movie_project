@@ -1,12 +1,13 @@
 .header-main {
   width: 100%;
   display: inline-block;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(50, 50, 50);
 
   .title-header-name {
+    position: relative;
     color: rgb(255, 255, 255);
     padding: 20px 47px;
     margin-top: 10px;
-    font-size: 30px;
+    font-size: 35px;
   }
 }

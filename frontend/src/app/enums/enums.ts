@@ -1,3 +1,8 @@
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 export enum Genre {
   ACTION = 'action',
   COMEDY = 'comedy',
@@ -8,7 +13,39 @@ export enum Genre {
   THRILLER = 'thriller',
 }
 
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+export enum Country {
+  RUSSIA = 'Россия',
+  USA = 'США',
+  USSR = 'СССР',
+  FRANCE = 'Франция',
+  ITALY = 'Италия',
+  SPAIN = 'Испания',
+  UK = 'Великобритания',
+  GERMANY = 'Германия',
+  SOUTHKOREA = 'Южная Корея',
+  JAPAN = 'Япония',
+  AUSTRALIA = 'Австралия',
+  AUSTRIA = 'Австрия',
+  BELGIUM = 'Бельгия',
+  BRASIL = 'Бразилия',
+  HONGKONG = 'Гонконг',
+  GREECE = 'Греция',
+  EGYPT = 'Египет',
+  ISRAEL = 'Израиль',
+  INDIA = 'Индия',
+  CANADA = 'Канада',
+  CHINA = 'Китай',
+  LIECHTENSTEIN = 'Лихтенштейн',
+  NETHERLANDS = 'Нидерланды',
+  NORWAY = 'Норвегия',
+  UAE = 'ОАЭ',
+  POLAND = 'Польша',
+  PORTUGAL = 'Португалия',
+  THAILAND = 'Таиланд',
+  TURKEY = 'Турция',
+  UKRAINE = 'Украина',
+  PHILIPPINES = 'Филиппины',
+  SWEDEN = 'Швеция',
+  SWITZERLAND = 'Швейцария',
+  SOUTHAFRICA = 'ЮАР',
 }

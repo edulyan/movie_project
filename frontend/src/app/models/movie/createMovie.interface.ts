@@ -1,10 +1,13 @@
-import { Genre } from 'src/app/enums/enums';
+import { Country, Genre } from 'src/app/enums/enums';
 
 export interface ICreateMovie {
   title: string;
   description: string;
+  director: string;
   year: number;
-  averageRating: number;
-  voteCount: number;
+  ageRating: string;
+  runTime: string;
+  budget: number;
+  country: Country[];
   genre: Genre[];
 }
