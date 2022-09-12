@@ -14,7 +14,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { User } from './entity/user.entity';
 import { UserDtoUpd } from './dto/userUpd.dto';
-import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
+import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
 import { Cache } from 'cache-manager';
 
 @Injectable()

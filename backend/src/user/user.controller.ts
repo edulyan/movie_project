@@ -15,7 +15,7 @@ import { CountFunc } from '../common/decorators/сountFunc.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
-import { ChangeRoleDto, UserMovieIdsDto } from './dto/add-change.dto';
+import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { UserRole } from '../common/enums';
 import { UserService } from './user.service';

@@ -18,7 +18,15 @@ export class UpdateMovieDto {
   })
   readonly description?: string;
 
+  readonly director?: string;
+
   readonly year?: number;
+
+  readonly ageRating?: string;
+
+  readonly runTime?: string;
+
+  readonly budget?: number;
 
   readonly averageRating?: number;
 

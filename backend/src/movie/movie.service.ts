@@ -30,7 +30,7 @@ export class MovieService {
 
   async getById(id: string): Promise<Movie> {
     const movie = await this.movieRepository.findOne(id, {
-      relations: ['comments'],
+      relations: ['comments', 'actorToMovies'],
     });
 
     if (!movie) {

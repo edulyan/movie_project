@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Comment } from '../../comment/entity/comment.entity';
 import { Country, Genre } from '../../common/enums';
+import { ActorToMovie } from './actorToMovie.entity';
 
 @Entity()
 export class Movie {
@@ -35,6 +36,9 @@ export class Movie {
   @Column()
   budget: number;
 
+  // @Column('varchar', { array: true })
+  // actors: string[];
+
   @Column({
     type: 'enum',
     enum: Country,
@@ -50,7 +54,7 @@ export class Movie {
   genre: Genre[];
 
   //Рейтинг фильма
-  @Column({ type: 'float', nullable: true, default: 1 })
+  @Column({ type: 'float', nullable: true, default: 0 })
   averageRating: number;
 
   //Количество голосов за фильм
@@ -65,6 +69,9 @@ export class Movie {
 
   @OneToMany(() => Comment, (comment) => comment.movie)
   comments: Comment[];
+
+  @OneToMany(() => ActorToMovie, (actorToMovie) => actorToMovie.movie)
+  actorToMovies!: ActorToMovie[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdDate: Date;

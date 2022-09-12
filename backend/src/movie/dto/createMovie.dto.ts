@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Genre } from '../../common/enums';
+import { Country, Genre } from '../../common/enums';
 
 export class CreateMovieDto {
   @IsNotEmpty({
@@ -28,9 +28,15 @@ export class CreateMovieDto {
 
   readonly budget: number;
 
-  readonly averageRating: number;
-
-  readonly voteCount: number;
+  @IsNotEmpty({
+    message: 'Country is required',
+  })
+  @IsString({
+    each: true,
+    message: 'Country must be a string',
+  })
+  @IsEnum(Country, { message: 'This country does not exist' })
+  readonly country: Country[];
 
   @IsNotEmpty({
     message: 'Genre is required',
