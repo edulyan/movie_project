@@ -36,6 +36,9 @@ export class Movie {
   @Column()
   budget: number;
 
+  @Column({ default: false })
+  withSubscription: boolean;
+
   // @Column('varchar', { array: true })
   // actors: string[];
 
