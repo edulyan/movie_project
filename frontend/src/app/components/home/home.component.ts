@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMovie } from 'src/app/models/movie/movie.interface';
 import { MovieService } from 'src/app/services/movie.service';

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IMenuItems } from './header.interface';
 
 @Component({
@@ -16,9 +17,13 @@ export class HeaderComponent implements OnInit {
       path: ':id/favorites',
       icon: 'favorite',
     },
+    {
+      path: ':id/user',
+      icon: 'Account Circle',
+    },
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 }
