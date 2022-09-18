@@ -10,6 +10,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   exports: [MovieComponent],
@@ -23,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatButtonToggleModule,
     MatListModule,
+    MatIconModule,
   ],
 })
 export class MovieModule {}

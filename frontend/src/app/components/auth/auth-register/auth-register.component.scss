@@ -3,12 +3,6 @@
   font-size: 18px;
 }
 
-::ng-deep .mat-raised-button {
-  height: 50px;
-  width: 200px;
-  border-radius: 0px !important;
-}
-
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
   color: rgb(50, 50, 50) !important;
@@ -24,6 +18,21 @@
   background-color: rgb(50, 50, 50) !important;
 }
 
+//HEADER-STYLE
+header {
+  position: relative;
+  display: flex;
+  height: 90px;
+  background-color: rgb(50, 50, 50);
+}
+
+.logo {
+  color: rgb(255, 255, 255);
+  margin: 30px 110px;
+  font-size: 40px;
+}
+
+//REGISTER-STYLE
 .register-main {
   text-align: center;
 
@@ -45,5 +54,11 @@
 
   .register-button-enter {
     margin-top: 10px;
+
+    .register-btn {
+      height: 50px;
+      width: 200px;
+      border-radius: 0px !important;
+    }
   }
 }

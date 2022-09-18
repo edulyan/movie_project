@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   exports: [HomeComponent],
@@ -22,6 +23,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatGridListModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatIconModule,
   ],
 })
 export class HomeModule {}

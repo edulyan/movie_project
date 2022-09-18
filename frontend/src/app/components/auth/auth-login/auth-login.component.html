@@ -1,3 +1,7 @@
+<header>
+  <h1 class="logo">ЭДФЛИКС</h1>
+</header>
+
 <div class="login-main">
   <div class="login-main-title">
     <h1 class="title-main">Войти в систему</h1>
@@ -33,12 +37,27 @@
 
         <div class="login-button-enter">
           <button
+            class="login-btn"
             mat-raised-button
             color="warn"
             [disabled]="formGroup.invalid"
             type="button"
+            [routerLink]="['/home']"
           >
             ВОЙТИ
+          </button>
+        </div>
+
+        <div class="to-registration">
+          <h2>Нет аккаунта?</h2>
+          <button
+            mat-button
+            color="warn"
+            [disabled]="formGroup.invalid"
+            type="button"
+            [routerLink]="['/register']"
+          >
+            ЗАРЕГИСТРИРОВАТЬСЯ
           </button>
         </div>
       </div>

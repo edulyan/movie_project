@@ -1,3 +1,26 @@
+<header>
+  <span class="menu">
+    <mat-icon class="menu-icon" [inline]="true">
+      menu
+      <div class="pop-up-menu">
+        <a href="/home">
+          <mat-icon class="home-icon" [inline]="true">home</mat-icon>
+          Главная
+        </a>
+        <a href="#">
+          <mat-icon class="favorite-icon" [inline]="true">favorite</mat-icon>
+          Любимые
+        </a>
+        <a href="#">Link 3</a>
+      </div>
+    </mat-icon>
+  </span>
+  <h1 class="logo">ЭДФЛИКС</h1>
+  <div class="account-div">
+    <mat-icon class="account-icon">account_circle</mat-icon>
+  </div>
+</header>
+
 <div class="movie-main">
   <div class="movie-info">
     <mat-grid-list *ngIf="movie$ | async as movie" cols="3" rowHeight="439px">

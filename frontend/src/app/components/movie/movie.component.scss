@@ -1,3 +1,90 @@
+//HEADER-STYLE
+a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  outline: none;
+  transition: 0.5s linear;
+
+  .home-icon {
+    font-size: 30px;
+  }
+
+  .favorite-icon {
+    font-size: 30px;
+  }
+}
+
+header {
+  position: relative;
+  display: flex;
+  height: 90px;
+  background-color: rgb(50, 50, 50);
+}
+
+.menu {
+  padding: 36px;
+  margin-left: 20px;
+
+  .menu-icon {
+    color: rgb(255, 255, 255);
+    margin-top: 0.5px;
+    margin-right: -15px;
+    font-size: 40px;
+  }
+
+  .pop-up-menu {
+    display: none;
+    position: absolute;
+    background-color: rgb(165, 165, 165);
+    min-height: 300px;
+    min-width: 300px;
+    left: 30px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .pop-up-menu a {
+    color: rgb(255, 255, 255);
+    padding: 30px 20px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .pop-up-menu a:hover {
+    background-color: rgb(165, 165, 165);
+  }
+
+  .menu-icon:hover {
+    color: rgb(165, 165, 165);
+  }
+
+  .menu-icon:hover .pop-up-menu {
+    display: block;
+  }
+}
+
+.logo {
+  position: absolute;
+  color: rgb(255, 255, 255);
+  margin: 30px 110px;
+  font-size: 40px;
+}
+
+.account-div {
+  position: absolute;
+  margin-top: 20px;
+  right: 2%;
+
+  .account-icon {
+    width: 55px;
+    height: 55px;
+    font-size: 55px;
+    color: rgb(255, 255, 255);
+  }
+}
+
+//MOVIE-STYLE
 .movie-main {
   margin: auto;
   width: 80%;

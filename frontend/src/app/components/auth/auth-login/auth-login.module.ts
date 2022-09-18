@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../../../app-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +16,7 @@ import { AuthLoginComponent } from './auth-login.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,

@@ -1,3 +1,7 @@
+<header>
+  <h1 class="logo">ЭДФЛИКС</h1>
+</header>
+
 <div class="register-main">
   <div class="register-main-title">
     <h1 class="title-main">Регистрация</h1>
@@ -42,7 +46,7 @@
               [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide"
             >
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
           </mat-form-field>
         </div>
@@ -50,6 +54,7 @@
 
       <div class="register-button-enter">
         <button
+          class="register-btn"
           mat-raised-button
           color="warn"
           [disabled]="formGroup.invalid"
