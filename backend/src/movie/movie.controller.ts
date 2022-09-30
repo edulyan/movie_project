@@ -10,6 +10,8 @@ import {
   UploadedFiles,
   UseGuards,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserRole } from '../common/enums';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -44,18 +46,25 @@ export class MovieController {
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
+  // @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
   @UseInterceptors(
     FileFieldsInterceptor([
       { name: 'image', maxCount: 1 },
       { name: 'video', maxCount: 1 },
+      { name: 'trailer', maxCount: 1 },
     ]),
     ChangeInterceptor,
   )
   async createMovie(@UploadedFiles() files, @Body() movieDto: CreateMovieDto) {
-    const { image, video } = files;
+    const { image, video, trailer } = files;
 
-    return await this.movieService.createMovie(movieDto, image[0], video[0]);
+    return await this.movieService.createMovie(
+      movieDto,
+      image[0],
+      video[0],
+      trailer[0],
+    );
   }
 
   @Roles(UserRole.ADMIN)

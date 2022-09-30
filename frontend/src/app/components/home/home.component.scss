@@ -1,6 +1,6 @@
 ::ng-deep .mat-focused .mat-form-field-label {
   /*change color of label*/
-  color: rgb(255, 255, 255) !important;
+  color: rgb(255, 119, 0) !important;
 }
 
 ::ng-deep .mat-form-field-label {
@@ -8,12 +8,12 @@
   color: rgb(170, 170, 170) !important;
 }
 
-::ng-deep.mat-form-field-ripple {
+::ng-deep .mat-form-field-ripple {
   /*change color of underline when focused*/
-  background-color: rgb(255, 255, 255) !important;
+  background-color: rgb(255, 119, 0) !important;
 }
 
-::ng-deep.mat-form-field-underline {
+::ng-deep .mat-form-field-underline {
   /*change color of underline*/
   background-color: rgb(170, 170, 170) !important;
 }
@@ -110,7 +110,7 @@ header {
   // margin: auto;
   // margin-top: 5px;
   text-align: center;
-  height: 90.6vh;
+  // height: 90.6vh;
   // width: 100%;
   background-color: rgb(50, 50, 50);
 
@@ -119,14 +119,20 @@ header {
     margin-top: 30px;
     font-size: 25px;
 
-    .mat-label {
+    // .mat-label {
+    //   color: rgb(242, 142, 21);
+    // }
+
+    .search-input {
       color: rgb(255, 255, 255);
+      font-weight: 700;
     }
   }
 
   .movie-list {
     margin-top: -30px;
     margin-left: 10px;
+    // height: 1000px;
     .mat-grid-list {
       .mat-grid-tile {
         .movie-img {

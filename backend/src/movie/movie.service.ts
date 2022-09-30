@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileType } from '../common/enums';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository, UpdateResult, Connection } from 'typeorm';
 import { CreateMovieDto } from './dto/createMovie.dto';
 import { Movie } from './entity/movie.entity';
 import { UpdateMovieDto } from './dto/updateMovie.dto';
@@ -52,6 +52,7 @@ export class MovieService {
     movieDto: CreateMovieDto,
     image: string,
     video: string,
+    trailer: string,
   ): Promise<Movie> {
     try {
       const imagePath = await this.fileService.createFile(
@@ -62,10 +63,15 @@ export class MovieService {
         FileType.VIDEO,
         video,
       );
+      const trailerPath = await this.fileService.createFile(
+        FileType.TRAILER,
+        trailer,
+      );
       const movie = await this.movieRepository.create({
         ...movieDto,
         image: imagePath,
         video: videoPath,
+        trailer: trailerPath,
       });
 
       return await this.movieRepository.save(movie);
@@ -97,6 +103,7 @@ export class MovieService {
     await this.movieRepository.delete(movie.id);
     this.fileService.deleteFile(movie.image);
     this.fileService.deleteFile(movie.video);
+    this.fileService.deleteFile(movie.trailer);
 
     return true;
   }

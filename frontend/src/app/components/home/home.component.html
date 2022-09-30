@@ -27,6 +27,7 @@
       <mat-form-field class="search">
         <mat-label>Поиск фильма </mat-label>
         <input
+          class="search-input"
           matInput
           [ngModel]="movie.title"
           (ngModelChange)="searchMovie($event)"

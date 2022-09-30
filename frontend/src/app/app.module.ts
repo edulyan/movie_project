@@ -12,6 +12,7 @@ import { AuthRegisterModule } from './components/auth/auth-register/auth-registe
 import { AuthLoginModule } from './components/auth/auth-login/auth-login.module';
 import { HomeModule } from './components/home/home.module';
 import { MovieModule } from './components/movie/movie.module';
+import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { MovieModule } from './components/movie/movie.module';
     AuthLoginModule,
     HomeModule,
     MovieModule,
+    VideoDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

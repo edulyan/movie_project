@@ -21,24 +21,64 @@
   </div>
 </header>
 
-<div class="movie-main">
-  <div class="movie-info">
-    <mat-grid-list *ngIf="movie$ | async as movie" cols="3" rowHeight="439px">
-      <mat-grid-tile [colspan]="1">
+<div *ngIf="movie$ | async as movie">
+  <div class="movie-main">
+    <div class="bg-video">
+      <video loop [muted]="'muted'" autoplay class="trailer-video">
+        <source
+          [src]="'http://localhost:3000/' + movie.trailer"
+          type="video/mp4"
+        />
+        <!-- <source src="media/videoframe.mp4" type="video/mp4" /> -->
+        >
+      </video>
+      <div class="shadow"></div>
+    </div>
+
+    <div class="movie-info">
+      <div class="movie-img-div">
         <img
           class="movie-img"
           mat-card-image
           [src]="'http://localhost:3000/' + movie.image"
         />
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="2"></mat-grid-tile>
+      </div>
 
-      <mat-grid-tile [colspan]="2">
+      <!-- <video-dialog [movie$]="movie$"></video-dialog> -->
+
+      <div class="movie-info-main">
+        <h1 class="movie-title-year">{{ movie.title }} ({{ movie.year }})</h1>
+
+        <div class="movie-info-btns">
+          <div class="toWatch-div">
+            <button
+              class="toWatch-btn"
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="playVideo(movie.id)"
+            >
+              <mat-icon class="play-icon">play_arrow</mat-icon>
+              СМОТРЕТЬ
+            </button>
+          </div>
+          <div class="toFavorite-div">
+            <button
+              class="toFavorite-btn"
+              mat-raised-button
+              color="warn"
+              type="button"
+            >
+              <mat-icon class="favorite-icon">favorite</mat-icon>
+            </button>
+          </div>
+        </div>
+
         <div class="movie-detail">
-          <div class="movie-detail-header">
-            <mat-list class="movie-detail-header" role="list">
+          <div class="movie-detail-header-div">
+            <mat-list class="movie-detail-header-list" role="list">
               <mat-list-item role="listitem">
-                <h1 class="about-movie">О фильме</h1>
+                <h1 style="width: 140px" class="about-movie">О фильме</h1>
               </mat-list-item>
               <mat-list-item role="listitem">Год производства</mat-list-item>
               <mat-list-item role="listitem">Страна</mat-list-item>
@@ -51,18 +91,29 @@
             <mat-list class="movie-detail-data" role="list">
               <mat-list-item role="listitem"></mat-list-item>
               <mat-list-item role="listitem">{{ movie.year }}</mat-list-item>
-              <mat-list-item role="listitem">{{ movie.country }}</mat-list-item>
-              <mat-list-item role="listitem">{{ movie.genre }}</mat-list-item>
               <mat-list-item role="listitem">{{
-                movie.director
+                movie.country.join(", ")
               }}</mat-list-item>
+              <mat-list-item role="listitem">{{
+                movie.genre.join(", ")
+              }}</mat-list-item>
+              <mat-list-item role="listitem">
+                {{ movie.director }}
+              </mat-list-item>
               <mat-list-item role="listitem">${{ movie.budget }}</mat-list-item>
             </mat-list>
           </div>
         </div>
-      </mat-grid-tile>
+      </div>
 
-      <mat-grid-tile [style.background]="'blue'">FIFTH</mat-grid-tile>
-    </mat-grid-list>
+      <div class="movie-rate-actors">
+        <div class="rate-div">
+          <h1 class="rating">{{ movie.averageRating }}</h1>
+        </div>
+        <div class="vote-count">
+          <h2 class="vote">{{ movie.voteCount }} оценок</h2>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

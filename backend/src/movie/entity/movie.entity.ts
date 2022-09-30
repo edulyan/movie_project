@@ -61,7 +61,7 @@ export class Movie {
   averageRating: number;
 
   //Количество голосов за фильм
-  @Column({ nullable: true })
+  @Column({ default: 0 })
   voteCount: number;
 
   @Column()
@@ -69,6 +69,9 @@ export class Movie {
 
   @Column()
   video: string;
+
+  @Column()
+  trailer: string;
 
   @OneToMany(() => Comment, (comment) => comment.movie)
   comments: Comment[];

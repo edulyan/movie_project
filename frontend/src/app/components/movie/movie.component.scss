@@ -20,6 +20,7 @@ header {
   display: flex;
   height: 90px;
   background-color: rgb(50, 50, 50);
+  border-bottom: 2px solid rgb(70, 70, 70);
 }
 
 .menu {
@@ -86,40 +87,142 @@ header {
 
 //MOVIE-STYLE
 .movie-main {
-  margin: auto;
-  width: 80%;
+  position: relative;
+  min-height: 100vh;
+  background-color: rgb(0, 0, 0);
+
+  .bg-video {
+    // background-size: cover;
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .trailer-video {
+      // justify-content: center;
+      // position: relative;
+      width: 800px;
+    }
+
+    .shadow {
+      // box-shadow: inset 100px 0 100px rgba(50, 50, 50, 0.5),
+      //   inset 100px 0 100px rgb(0, 0, 0);
+      box-shadow: inset 20px 0 20px 10px rgba(0, 0, 0, 1);
+      position: absolute;
+      text-align: center;
+      justify-content: center;
+      width: 800px;
+      height: 100%;
+    }
+  }
 
   .movie-info {
-    .mat-grid-list {
-      .mat-grid-tile {
-        .movie-img {
-          height: 440px;
-          width: 770px;
+    display: flex;
+    margin: auto;
+    max-width: 75%;
+
+    .movie-img-div {
+      position: relative;
+      margin-top: -50px;
+    }
+
+    .movie-img {
+      height: 280px;
+      width: 500px;
+    }
+
+    .movie-info-main {
+      position: relative;
+      margin-top: -50px;
+      width: 625px;
+      .movie-title-year {
+        padding: 5px 0 0 20px;
+        font-size: 50px;
+        width: 450px;
+        font-weight: 600;
+        color: rgb(255, 255, 255);
+      }
+
+      .movie-info-btns {
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        height: 50px;
+        width: 320px;
+
+        .toWatch-div {
+          display: flex;
+          padding: 25px 0 0 20px;
+          width: 200px;
+          height: 40px;
+
+          .toWatch-btn {
+            position: relative;
+            width: 200px;
+            height: 40px;
+            border-radius: 30px;
+
+            .play-icon {
+              margin-bottom: 2px;
+            }
+          }
         }
 
-        .movie-detail {
-          display: flex;
-          font-size: 24px;
+        .toFavorite-div {
+          width: 65px;
+          .toFavorite-btn {
+            height: 40px;
+            border-radius: 50%;
 
-          .about-movie {
-            color: rgb(255, 255, 255);
-            margin-bottom: 50px;
-            font-size: 30px;
+            // .favorite-icon {
+            //   // font-size: 20px;
+            // }
           }
+        }
+      }
+    }
 
-          .movie-detail-header {
-            margin-right: 30px;
+    .movie-detail {
+      padding: 80px 0 0 10px;
+      display: flex;
+      font-size: 24px;
 
-            .mat-list-item {
-              color: rgba(255, 255, 255, 0.6);
-            }
-          }
+      .movie-detail-header-div {
+        margin-right: 30px;
 
-          .movie-detail-data {
-            .mat-list-item {
-              color: rgba(255, 255, 255, 0.6);
-            }
-          }
+        .about-movie {
+          color: rgb(255, 255, 255);
+          margin-bottom: 50px;
+          font-size: 30px;
+        }
+
+        .mat-list-item {
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      .movie-detail-data {
+        .mat-list-item {
+          color: rgba(255, 255, 255, 0.6);
+        }
+      }
+    }
+
+    .movie-rate-actors {
+      position: relative;
+      margin-top: -50px;
+      padding: 5px 0 0 10px;
+      .rate-div {
+        .rating {
+          color: rgb(255, 255, 255);
+          font-size: 40px;
+        }
+      }
+
+      .vote-count {
+        .vote {
+          color: rgb(255, 255, 255);
         }
       }
     }

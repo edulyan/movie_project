@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { VideoDialogModule } from 'src/app/dialogs/video-dialog/video-dialog.module';
 
 @NgModule({
   exports: [MovieComponent],
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonToggleModule,
     MatListModule,
     MatIconModule,
+    VideoDialogModule,
   ],
 })
 export class MovieModule {}

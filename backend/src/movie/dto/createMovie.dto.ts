@@ -1,4 +1,12 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Country, Genre } from '../../common/enums';
 
 export class CreateMovieDto {
@@ -35,7 +43,7 @@ export class CreateMovieDto {
     each: true,
     message: 'Country must be a string',
   })
-  @IsEnum(Country, { message: 'This country does not exist' })
+  // @IsEnum(Country, { message: 'This country does not exist' })
   readonly country: Country[];
 
   @IsNotEmpty({
@@ -45,6 +53,6 @@ export class CreateMovieDto {
     each: true,
     message: 'Genre must be a string',
   })
-  @IsEnum(Genre, { message: 'This genre does not exist' })
+  // @IsEnum(Genre, { message: 'This genre does not exist' })
   readonly genre: Genre[];
 }

@@ -16,6 +16,7 @@ export interface IMovie {
   voteCount: number;
   image: string;
   video: string;
+  trailer: string;
   comments: IComment[];
   createdDate: Date;
   updatedDate: Date;
