@@ -5,8 +5,8 @@ export class UserMovieIdsDto {
   readonly movieId: string;
 }
 
-export class ActorMovieIdsDto {
-  readonly actorId: string;
+export class PersonMovieIdsDto {
+  readonly personId: string;
   readonly movieId: string;
 }
 

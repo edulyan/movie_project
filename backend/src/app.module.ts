@@ -12,7 +12,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { RedisCacheModule } from './cache/redisCache.module';
 import { MailModule } from './mailer/mailer.module';
-import { ActorModule } from './actor/actor.module';
+import { PersonModule } from './person/person.module';
+import { MoviePersonModule } from './movie-person/movie-person.module';
 import MailConfig from './config/mailer.config';
 
 @Module({
@@ -34,7 +35,8 @@ import MailConfig from './config/mailer.config';
     FileModule,
     RedisCacheModule,
     MailModule,
-    ActorModule,
+    PersonModule,
+    MoviePersonModule,
   ],
   controllers: [],
   providers: [],

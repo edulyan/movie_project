@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Country } from '../../common/enums';
-import { ActorToMovie } from '../../movie/entity/actorToMovie.entity';
+import { PersonToMovie } from '../../movie-person/entity/personToMovie.entity';
 
 @Entity()
-export class Actor {
+export class Person {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -19,6 +19,6 @@ export class Actor {
   @Column({ nullable: true })
   movieCount: number;
 
-  @OneToMany(() => ActorToMovie, (actorToMovie) => actorToMovie.actor)
-  actorToMovies!: ActorToMovie[];
+  @OneToMany(() => PersonToMovie, (presonToMovie) => presonToMovie.person)
+  personToMovies: PersonToMovie[];
 }

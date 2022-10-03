@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Comment } from '../../comment/entity/comment.entity';
 import { Country, Genre } from '../../common/enums';
-import { ActorToMovie } from './actorToMovie.entity';
+import { PersonToMovie } from '../../movie-person/entity/personToMovie.entity';
 
 @Entity()
 export class Movie {
@@ -76,8 +76,8 @@ export class Movie {
   @OneToMany(() => Comment, (comment) => comment.movie)
   comments: Comment[];
 
-  @OneToMany(() => ActorToMovie, (actorToMovie) => actorToMovie.movie)
-  actorToMovies!: ActorToMovie[];
+  @OneToMany(() => PersonToMovie, (personToMovie) => personToMovie.movie)
+  personToMovies: PersonToMovie[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdDate: Date;

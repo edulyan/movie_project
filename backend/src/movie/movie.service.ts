@@ -30,8 +30,14 @@ export class MovieService {
 
   async getById(id: string): Promise<Movie> {
     const movie = await this.movieRepository.findOne(id, {
-      relations: ['comments', 'actorToMovies'],
+      relations: ['comments', 'personToMovies'],
     });
+
+    // const movie = await this.movieRepository
+    //   .createQueryBuilder('movie')
+    //   .leftJoinAndSelect('movie.comments', 'comments')
+    //   .leftJoinAndSelect('movie.personToMovies', 'personToMovies')
+    //   .getOne();
 
     if (!movie) {
       throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
@@ -80,15 +86,8 @@ export class MovieService {
     }
   }
 
-  async updateMovie(
-    id: string,
-    movie: UpdateMovieDto,
-  ): Promise<UpdateResult | void> {
-    const movieOne = await this.getById(id);
-
-    if (!movieOne) {
-      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
-    }
+  async updateMovie(id: string, movie: UpdateMovieDto): Promise<UpdateResult> {
+    await this.getById(id);
 
     return await this.movieRepository.update(id, movie);
   }

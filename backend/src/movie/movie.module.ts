@@ -6,14 +6,14 @@ import { MovieController } from './movie.controller';
 import { MovieService } from './movie.service';
 import { FileModule } from '../file/file.module';
 import { AuthModule } from '../auth/auth.module';
-import { ActorToMovie } from './entity/actorToMovie.entity';
+import { PersonToMovie } from '../movie-person/entity/personToMovie.entity';
 
 @Module({
   controllers: [MovieController],
   providers: [MovieService],
   exports: [MovieService],
   imports: [
-    TypeOrmModule.forFeature([Movie, Comment, ActorToMovie]),
+    TypeOrmModule.forFeature([Movie, Comment, PersonToMovie]),
     FileModule,
     AuthModule,
   ],
