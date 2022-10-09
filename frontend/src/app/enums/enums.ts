@@ -13,6 +13,15 @@ export enum Genre {
   THRILLER = 'thriller',
 }
 
+export enum MoviePersonTypeEnum {
+  ACTOR = 'АКТЕР',
+  COMPOSER = 'КОМПОЗИТОР',
+  DIRECTOR = 'РЕЖИССЕР',
+  OPERATOR = 'ОПЕРАТОР',
+  PRODUCER = 'ПРОДЮСЕР',
+  WRITER = 'СЦЕНАРИСТ',
+}
+
 export enum Country {
   RUSSIA = 'Россия',
   USA = 'США',

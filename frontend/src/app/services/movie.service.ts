@@ -26,6 +26,10 @@ export class MovieService {
     return this.http.get<IMovie>(`${this.URL_MOVIE}/${id}`);
   }
 
+  getMovieActors(id: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.URL_MOVIE}/movieActors/${id}`);
+  }
+
   createMovie(
     createFiles: ICreateFiles,
     movieDto: ICreateMovie

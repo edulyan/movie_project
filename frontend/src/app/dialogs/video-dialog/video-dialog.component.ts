@@ -31,11 +31,5 @@ export class VideoDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.movie$ = this.movieService.getById(this.data);
-    // this.movie$ = this.activatedRoute.params.pipe(
-    //   pluck('id'),
-    //   switchMap((id) => this.movieService.getById(id))
-    // );
-
-    console.log(this.movie$);
   }
 }

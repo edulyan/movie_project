@@ -113,6 +113,9 @@
         <div class="vote-count">
           <h2 class="vote">{{ movie.voteCount }} оценок</h2>
         </div>
+        <div class="movie-actors" *ngIf="actors$ | async as actor">
+          <h2 ng-bind-html="" class="actors">{{ actor.join(" ") }}</h2>
+        </div>
       </div>
     </div>
   </div>

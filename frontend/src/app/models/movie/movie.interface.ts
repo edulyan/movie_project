@@ -1,5 +1,6 @@
 import { Country, Genre } from 'src/app/enums/enums';
 import { IComment } from '../comment/comment.interface';
+import { IMoviePerson } from '../movie-person/moviePerson.interface';
 
 export interface IMovie {
   id: string;
@@ -18,6 +19,7 @@ export interface IMovie {
   video: string;
   trailer: string;
   comments: IComment[];
+  personToMovies: IMoviePerson[];
   createdDate: Date;
   updatedDate: Date;
 }
