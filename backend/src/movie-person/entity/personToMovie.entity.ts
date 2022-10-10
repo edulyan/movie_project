@@ -6,7 +6,7 @@ import { MoviePersonTypeEnum } from '../../common/enums';
 @Entity({ name: 'movies_persons' })
 export class PersonToMovie {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   movieId: string;

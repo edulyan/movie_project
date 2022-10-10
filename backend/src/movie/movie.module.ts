@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from '../comment/entity/comment.entity';
 import { Movie } from './entity/movie.entity';
@@ -7,6 +7,7 @@ import { MovieService } from './movie.service';
 import { FileModule } from '../file/file.module';
 import { AuthModule } from '../auth/auth.module';
 import { PersonToMovie } from '../movie-person/entity/personToMovie.entity';
+import { PersonModule } from '../person/person.module';
 
 @Module({
   controllers: [MovieController],
@@ -16,6 +17,7 @@ import { PersonToMovie } from '../movie-person/entity/personToMovie.entity';
     TypeOrmModule.forFeature([Movie, Comment, PersonToMovie]),
     FileModule,
     AuthModule,
+    forwardRef(() => PersonModule),
   ],
 })
 export class MovieModule {}

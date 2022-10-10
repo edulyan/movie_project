@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { MovieService } from '../movie/movie.service';
@@ -14,6 +20,7 @@ export class PersonService {
     @InjectRepository(Person) private personRepository: Repository<Person>,
     @InjectRepository(PersonToMovie)
     private personToMovieRepo: Repository<PersonToMovie>,
+    @Inject(forwardRef(() => MovieService))
     private movieService: MovieService,
   ) {}
 

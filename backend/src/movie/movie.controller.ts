@@ -44,6 +44,11 @@ export class MovieController {
     return await this.movieService.getById(id);
   }
 
+  @Get('movieActors/:id')
+  async getMovieActors(@Param('id') id: string) {
+    return await this.movieService.getMovieActors(id);
+  }
+
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   // @UsePipes(new ValidationPipe({ transform: true }))

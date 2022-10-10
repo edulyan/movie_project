@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileType } from '../common/enums';
 import { Repository, UpdateResult, Connection } from 'typeorm';
@@ -6,11 +12,14 @@ import { CreateMovieDto } from './dto/createMovie.dto';
 import { Movie } from './entity/movie.entity';
 import { UpdateMovieDto } from './dto/updateMovie.dto';
 import { FileService } from '../file/file.service';
+import { PersonService } from '../person/person.service';
 
 @Injectable()
 export class MovieService {
   constructor(
     @InjectRepository(Movie) private movieRepository: Repository<Movie>,
+    @Inject(forwardRef(() => PersonService))
+    private personService: PersonService,
     private readonly fileService: FileService,
   ) {}
 
@@ -44,6 +53,24 @@ export class MovieService {
     }
 
     return movie;
+  }
+
+  async getMovieActors(id: string): Promise<string[]> {
+    const movie = await this.getById(id);
+
+    const actorsIds: string[] = movie.personToMovies.map(
+      (item) => item.personId,
+    );
+
+    const actorName = await Promise.all(
+      actorsIds.map((item) =>
+        this.personService.getById(item).then((prop) => {
+          return prop.name;
+        }),
+      ),
+    );
+
+    return actorName;
   }
 
   async search(title: string): Promise<Movie[]> {
