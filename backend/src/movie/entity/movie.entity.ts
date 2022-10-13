@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../user/entity/user.entity';
 import { Comment } from '../../comment/entity/comment.entity';
 import { Country, Genre } from '../../common/enums';
 import { PersonToMovie } from '../../movie-person/entity/personToMovie.entity';
@@ -78,6 +80,9 @@ export class Movie {
 
   @OneToMany(() => PersonToMovie, (personToMovie) => personToMovie.movie)
   personToMovies: PersonToMovie[];
+
+  @ManyToOne(() => User, (user) => user.favorites)
+  userFavorites: User;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdDate: Date;

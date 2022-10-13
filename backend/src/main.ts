@@ -9,7 +9,10 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(compression());
   app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:4200',
+    credentials: true,
+  });
 
   // app.useGlobalInterceptors(new ChangeInterceptor());
 

@@ -39,7 +39,10 @@ export class AuthService {
       );
     }
 
-    const token = this.jwtService.sign({ id: useR.id, role: useR.role });
+    const token = await this.jwtService.signAsync({
+      id: useR.id,
+      role: useR.role,
+    });
 
     const { password, ...user } = useR;
 

@@ -22,7 +22,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const jwt = await this.authService.signIn(authDto);
-    res.cookie('jwtToken', jwt, { httpOnly: true });
+    res.cookie('jwtToken', jwt, { httpOnly: true, secure: true });
 
     return jwt;
   }

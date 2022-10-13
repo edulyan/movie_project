@@ -50,8 +50,7 @@ export class User {
   @JoinTable()
   ratedToMovies: Movie[];
 
-  @ManyToMany(() => Movie)
-  @JoinTable()
+  @OneToMany(() => Movie, (movie) => movie.userFavorites)
   favorites: Movie[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })

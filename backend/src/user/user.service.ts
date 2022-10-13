@@ -16,6 +16,7 @@ import { User } from './entity/user.entity';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
 import { Cache } from 'cache-manager';
+import { Movie } from '../movie/entity/movie.entity';
 
 @Injectable()
 export class UserService {
@@ -92,6 +93,12 @@ export class UserService {
     );
 
     return user;
+  }
+
+  async getFavorites(id: string): Promise<Movie[]> {
+    const user = await this.getById(id);
+
+    return user.favorites;
   }
 
   async createUser(userDto: UserDto): Promise<User> {

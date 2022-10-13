@@ -64,6 +64,11 @@ export class UserController {
     return await this.userService.getById(id);
   }
 
+  @Get('/favorites/:id')
+  async getFavorites(@Param('id') id: string) {
+    return await this.userService.getFavorites(id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('/addMovieToFav')
   async addMovieToFav(@Body() dto: UserMovieIdsDto) {
