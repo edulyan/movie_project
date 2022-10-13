@@ -8,6 +8,7 @@ export interface IUser {
   lastName: string;
   email: string;
   password: string;
+  isSubscribed: boolean;
   role: UserRole;
   comments: IComment[];
   ratedToMovies: IMovie[];

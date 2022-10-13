@@ -29,7 +29,6 @@
           [src]="'http://localhost:3000/' + movie.trailer"
           type="video/mp4"
         />
-        <!-- <source src="media/videoframe.mp4" type="video/mp4" /> -->
         >
       </video>
       <div class="shadow"></div>
@@ -113,8 +112,9 @@
         <div class="vote-count">
           <h2 class="vote">{{ movie.voteCount }} оценок</h2>
         </div>
-        <div class="movie-actors" *ngIf="actors$ | async as actor">
-          <h2 ng-bind-html="" class="actors">{{ actor.join(" ") }}</h2>
+        <div class="movie-actors">
+          <h2 class="movie-actors-title">В главных ролях</h2>
+          <h2 *ngFor="let actor of actors" class="actors">{{ actor }}</h2>
         </div>
       </div>
     </div>

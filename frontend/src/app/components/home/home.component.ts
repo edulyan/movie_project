@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMovie } from 'src/app/models/movie/movie.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -11,8 +12,12 @@ import { MovieService } from 'src/app/services/movie.service';
 export class HomeComponent implements OnInit {
   movieData = new BehaviorSubject<IMovie[]>([]);
   movie: IMovie = {} as IMovie;
+  authenticated = false;
 
-  constructor(private movieService: MovieService) {}
+  constructor(
+    private movieService: MovieService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.movieService
@@ -34,5 +39,11 @@ export class HomeComponent implements OnInit {
         .search(title)
         .subscribe((trackListItem) => this.movieData.next(trackListItem));
     }
+  }
+
+  logout() {
+    return this.authService
+      .logout()
+      .subscribe(() => (this.authenticated = false));
   }
 }

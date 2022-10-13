@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ICreateFiles } from '../models/movie/createFile.interface';
 import { ICreateMovie } from '../models/movie/createMovie.interface';
 import { IMovie } from '../models/movie/movie.interface';
@@ -27,7 +27,12 @@ export class MovieService {
   }
 
   getMovieActors(id: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.URL_MOVIE}/movieActors/${id}`);
+    return this.http.get<string[]>(`${this.URL_MOVIE}/movieActors/${id}`).pipe(
+      map((data: string[]) => {
+        let actorList: string[] = data;
+        return actorList;
+      })
+    );
   }
 
   createMovie(

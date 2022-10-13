@@ -15,6 +15,7 @@ import { PersonService } from 'src/app/services/person.service';
 export class MovieComponent implements OnInit {
   movie$: Observable<IMovie>;
   actors$: Observable<string[]>;
+  actors: string[] = [];
 
   constructor(
     private movieService: MovieService,
@@ -30,10 +31,12 @@ export class MovieComponent implements OnInit {
       switchMap((id) => this.movieService.getById(id))
     );
 
-    this.actors$ = this.activatedRoute.params.pipe(
-      pluck('id'),
-      switchMap((id) => this.movieService.getMovieActors(id))
-    );
+    this.activatedRoute.params
+      .pipe(
+        pluck('id'),
+        switchMap((id) => this.movieService.getMovieActors(id))
+      )
+      .subscribe({ next: (data: string[]) => (this.actors = data) });
   }
 
   playVideo(id: string) {
@@ -43,5 +46,7 @@ export class MovieComponent implements OnInit {
     });
 
     ref.afterClosed().subscribe();
+
+    console.log(this.actors);
   }
 }

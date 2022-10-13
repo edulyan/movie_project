@@ -20,7 +20,6 @@ header {
   display: flex;
   height: 90px;
   background-color: rgb(50, 50, 50);
-  border-bottom: 2px solid rgb(70, 70, 70);
 }
 
 .menu {
@@ -227,8 +226,17 @@ header {
       }
 
       .movie-actors {
-        .actors {
+        font-size: 20px;
+        .movie-actors-title {
+          font-weight: bold;
+          margin-top: 90px;
+          margin-bottom: 25px;
           color: rgb(255, 255, 255);
+        }
+        .actors {
+          color: rgba(255, 255, 255, 0.6);
+          margin-bottom: -3px;
+          font-size: 18px;
         }
       }
     }

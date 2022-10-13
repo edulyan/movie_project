@@ -13,6 +13,7 @@ import { AuthLoginModule } from './components/auth/auth-login/auth-login.module'
 import { HomeModule } from './components/home/home.module';
 import { MovieModule } from './components/movie/movie.module';
 import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
+import { FavoritesModule } from './components/favorites/favorites.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
     HomeModule,
     MovieModule,
     VideoDialogModule,
+    FavoritesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
