@@ -16,3 +16,15 @@ export interface IUser {
   createdDate: Date;
   updatedDate: Date;
 }
+
+export interface IUserToken {
+  id: string;
+  firstname: string;
+  lastName: string;
+  email: string;
+  isSubscribed: boolean;
+  role: UserRole;
+  createdDate: Date;
+  updatedDate: Date;
+  token: string;
+}

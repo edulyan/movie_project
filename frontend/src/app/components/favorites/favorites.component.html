@@ -21,6 +21,30 @@
   </div>
 </header>
 
-<div>
-  <div class="favorites-main"></div>
+<div class="favorites-main">
+  <div class="favorites-title-div">
+    <h1 class="favorites-title">Буду смотреть</h1>
+  </div>
+
+  <div
+    class="fav-mov-list"
+    *ngIf="getFavoritesMovies() | async as favoritesMovies"
+  >
+    <div class="fav-mov-list">
+      <mat-grid-list cols="5" rowHeight="400px">
+        <mat-grid-tile *ngFor="let movie of favoritesMovies">
+          <button type="button" mat-button [routerLink]="['/movie/', movie.id]">
+            <img
+              class="movie-img"
+              mat-card-image
+              [src]="'http://localhost:3000/' + movie.image"
+            />
+            <div class="rating">
+              {{ movie.averageRating }}
+            </div>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
 </div>

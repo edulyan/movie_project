@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { HomeModule } from './components/home/home.module';
 import { MovieModule } from './components/movie/movie.module';
 import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
 import { FavoritesModule } from './components/favorites/favorites.module';
+import { JwtInterceptor } from './common/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,9 @@ import { FavoritesModule } from './components/favorites/favorites.module';
     VideoDialogModule,
     FavoritesModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

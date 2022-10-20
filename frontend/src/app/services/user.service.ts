@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IMovie } from '../models/movie/movie.interface';
 import {
   IChangeRole,
   IUserMovieIds,
@@ -11,7 +12,7 @@ import { IUser } from '../models/user/user.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class IUserService {
+export class UserService {
   private URL_USER = 'http://localhost:3000/user';
 
   constructor(private http: HttpClient) {}
@@ -22,6 +23,10 @@ export class IUserService {
 
   getById(id: string): Observable<IUser> {
     return this.http.get<IUser>(`${this.URL_USER}/${id}`);
+  }
+
+  getFavorites(id: string): Observable<IMovie[]> {
+    return this.http.get<IMovie[]>(`${this.URL_USER}/favorites/${id}`);
   }
 
   addMovieToFav(userMovieIds: IUserMovieIds): Observable<IUser> {

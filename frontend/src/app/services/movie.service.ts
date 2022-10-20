@@ -23,7 +23,12 @@ export class MovieService {
   }
 
   getById(id: string): Observable<IMovie> {
-    return this.http.get<IMovie>(`${this.URL_MOVIE}/${id}`);
+    return this.http.get<IMovie>(`${this.URL_MOVIE}/${id}`, {
+      headers: {
+        authorization: `Bearer ${JSON.parse(localStorage.getItem('token')!)}`,
+      },
+      withCredentials: true,
+    });
   }
 
   getMovieActors(id: string): Observable<string[]> {

@@ -1,18 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { IAuth } from '../models/auth/auth.interface';
+import { IAuth, IJwtToken } from '../models/auth/auth.interface';
 import { ICreateUser } from '../models/user/createUser.interface';
-import { IUser } from '../models/user/user.interface';
+import { IUser, IUserToken } from '../models/user/user.interface';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private URL_AUTH = 'http://localhost:3000/auth';
+  private userSubject: BehaviorSubject<string>;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.userSubject = new BehaviorSubject<string>(
+      JSON.parse(localStorage.getItem('token')!)
+    );
+    // console.log(this.userSubject.value);
+  }
 
   signIn(authDto: IAuth) {
     return this.http
@@ -26,10 +34,10 @@ export class AuthService {
       )
       .pipe(
         map((token) => {
-          localStorage.setItem('token', token.access_token);
+          localStorage.setItem('token', JSON.stringify(token.token));
+          this.userSubject.next(token.token);
           return token;
-        }),
-        shareReplay()
+        })
       );
   }
 
@@ -38,6 +46,10 @@ export class AuthService {
       `${this.URL_AUTH}/register`,
       createUser
     ) as Observable<IUser>;
+  }
+
+  getUserCookie() {
+    return this.http.get(`${this.URL_AUTH}/user`, { withCredentials: true });
   }
 
   // logOut() {
@@ -56,15 +68,16 @@ export class AuthService {
     return this.http.post<IUser>(`${this.URL_AUTH}/forgotPass`, authDto);
   }
 
-  getToken() {
-    try {
-      return localStorage.getItem('token');
-    } catch (err) {
-      return err;
-    }
+  getToken(): string {
+    return this.userSubject.value;
   }
 
   isAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  getDecodedToken(): IJwtToken {
+    let token = localStorage.getItem('token')!;
+    return jwt_decode(token);
   }
 }

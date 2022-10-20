@@ -89,4 +89,40 @@ header {
   // position: relative;
   min-height: 100vh;
   background-color: rgb(0, 0, 0);
+
+  .favorites-title {
+    padding: 70px;
+
+    width: 220px;
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+  }
+
+  .fav-mov-list {
+    margin-top: -150px;
+    margin-left: 10px;
+    // height: 1000px;
+    .mat-grid-list {
+      .mat-grid-tile {
+        .movie-img {
+          height: 160px;
+          width: 280px;
+          border-radius: 5%;
+        }
+
+        .rating {
+          position: absolute;
+          background: rgb(255, 170, 0);
+          top: 2%;
+          font: bold 20px/30px Helvetica, Sans-Serif;
+          padding: 5px 3%;
+          margin-left: 2%;
+          height: 30px;
+          width: 30px;
+          border-radius: 20%;
+        }
+      }
+    }
+  }
 }

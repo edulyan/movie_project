@@ -77,12 +77,12 @@ header {
 
 //HOME-STYLE
 .home-main {
-  // margin: auto;
-  // margin-top: 5px;
-  text-align: center;
-  // height: 90.6vh;
-  // width: 100%;
+  height: 90.6%;
   background-color: rgb(50, 50, 50);
+
+  .form-group {
+    text-align: center;
+  }
 
   .search {
     width: 1000px;

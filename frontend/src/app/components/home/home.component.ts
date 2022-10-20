@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMovie } from 'src/app/models/movie/movie.interface';
+import { IUser } from 'src/app/models/user/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { MovieService } from 'src/app/services/movie.service';
 
@@ -12,7 +13,9 @@ import { MovieService } from 'src/app/services/movie.service';
 export class HomeComponent implements OnInit {
   movieData = new BehaviorSubject<IMovie[]>([]);
   movie: IMovie = {} as IMovie;
+  user: IUser = {} as IUser;
   authenticated = false;
+  errorMessage: String;
 
   constructor(
     private movieService: MovieService,
@@ -23,6 +26,14 @@ export class HomeComponent implements OnInit {
     this.movieService
       .getAll()
       .subscribe((movieListItem) => this.movieData.next(movieListItem));
+
+    this.authService.getUserCookie().subscribe(
+      (data: any) => (this.user = data),
+      (error) => {
+        this.errorMessage = error.message;
+        console.log(error);
+      }
+    );
   }
 
   getMovies(): Observable<IMovie[]> {
