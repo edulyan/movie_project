@@ -39,6 +39,8 @@ export class MovieController {
     return await this.movieService.search(title);
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
   async getById(@Param('id') id: string) {
     return await this.movieService.getById(id);

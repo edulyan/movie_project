@@ -107,17 +107,19 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  async addMovieToFav(dto: UserMovieIdsDto): Promise<User> {
+  async addMovieToFav(dto: UserMovieIdsDto): Promise<Movie> {
     const user = await this.getById(dto.userId);
     const movie = await this.movieService.getById(dto.movieId);
 
     user.favorites.push(movie);
 
-    return await this.userRepository.save(user).finally(() => {
+    await this.userRepository.save(user).finally(() => {
       this.logger.log(
         `${UserService.prototype.addMovieToFav.name}() - Successfully was added movie to favorites`,
       );
     });
+
+    return movie;
   }
 
   async changeUserRole(changeRole: ChangeRoleDto) {
