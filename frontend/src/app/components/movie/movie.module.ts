@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { VideoDialogModule } from 'src/app/dialogs/video-dialog/video-dialog.module';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { VideoDialogModule } from 'src/app/dialogs/video-dialog/video-dialog.mod
   imports: [
     CommonModule,
     FormsModule,
+    AppRoutingModule,
     MatInputModule,
     MatFormFieldModule,
     MatGridListModule,
@@ -26,6 +28,7 @@ import { VideoDialogModule } from 'src/app/dialogs/video-dialog/video-dialog.mod
     MatButtonToggleModule,
     MatListModule,
     MatIconModule,
+    MatMenuModule,
     VideoDialogModule,
   ],
 })

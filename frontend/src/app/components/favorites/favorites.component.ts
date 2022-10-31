@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./favorites.component.scss'],
 })
 export class FavoritesComponent implements OnInit {
-  favoritesMovies = new BehaviorSubject<IMovie[]>([]);
+  favoritesMovies$ = new BehaviorSubject<IMovie[]>([]);
   favMovie: IMovie = {} as IMovie;
 
   constructor(
@@ -24,10 +24,10 @@ export class FavoritesComponent implements OnInit {
         pluck('id'),
         switchMap((id) => this.userService.getFavorites(id))
       )
-      .subscribe((movies) => this.favoritesMovies.next(movies));
+      .subscribe((movies) => this.favoritesMovies$.next(movies));
   }
 
   getFavoritesMovies(): Observable<IMovie[]> {
-    return this.favoritesMovies.asObservable();
+    return this.favoritesMovies$.asObservable();
   }
 }

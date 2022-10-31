@@ -1,24 +1,45 @@
 <header>
-  <span class="menu">
-    <mat-icon class="menu-icon" [inline]="true">
-      menu
-      <div class="pop-up-menu">
-        <a href="/home">
-          <mat-icon class="home-icon" [inline]="true">home</mat-icon>
-          Главная
-        </a>
-        <a href="#">
-          <mat-icon class="favorite-icon" [inline]="true">favorite</mat-icon>
-          Любимые
-        </a>
-        <a href="#">Link 3</a>
-      </div>
-    </mat-icon>
-  </span>
+  <div class="menu">
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <mat-menu #mainMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/home']">
+      <mat-icon>home</mat-icon>
+      <span>Главная</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/favorites', user.id]">
+      <mat-icon>favorite</mat-icon>
+      <span>Любимые</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>Disable alerts</span>
+    </button>
+  </mat-menu>
+
   <h1 class="logo">ЭДФЛИКС</h1>
   <div class="account-div">
-    <mat-icon class="account-icon">account_circle</mat-icon>
+    <button
+      type="button"
+      [matMenuTriggerFor]="accountMenu"
+      mat-button
+      class="account-btn"
+    >
+      <mat-icon class="account-icon">account_circle</mat-icon>
+    </button>
   </div>
+  <mat-menu #accountMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Профиль</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Выйти</span>
+    </button>
+  </mat-menu>
 </header>
 
 <div *ngIf="movie$ | async as movie">
@@ -65,7 +86,8 @@
             <button
               class="toFavorite-btn"
               mat-raised-button
-              color="warn"
+              [color]="isSelected ? 'warn' : 'basic'"
+              (click)="addFavorites(movie.id)"
               type="button"
             >
               <mat-icon class="favorite-icon">favorite</mat-icon>

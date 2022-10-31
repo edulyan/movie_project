@@ -24,6 +24,7 @@ export interface IUserToken {
   email: string;
   isSubscribed: boolean;
   role: UserRole;
+  favorites: IMovie[];
   createdDate: Date;
   updatedDate: Date;
   token: string;

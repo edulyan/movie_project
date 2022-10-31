@@ -28,11 +28,11 @@
 
   <div
     class="fav-mov-list"
-    *ngIf="getFavoritesMovies() | async as favoritesMovies"
+    *ngIf="getFavoritesMovies() | async as favoritesMovies$"
   >
     <div class="fav-mov-list">
       <mat-grid-list cols="5" rowHeight="400px">
-        <mat-grid-tile *ngFor="let movie of favoritesMovies">
+        <mat-grid-tile *ngFor="let movie of favoritesMovies$">
           <button type="button" mat-button [routerLink]="['/movie/', movie.id]">
             <img
               class="movie-img"

@@ -15,6 +15,7 @@ import { MovieModule } from './components/movie/movie.module';
 import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
 import { FavoritesModule } from './components/favorites/favorites.module';
 import { JwtInterceptor } from './common/jwt.interceptor';
+import { ErrorInterceptor } from './common/error.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { JwtInterceptor } from './common/jwt.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

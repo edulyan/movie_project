@@ -29,10 +29,19 @@ export class UserService {
     return this.http.get<IMovie[]>(`${this.URL_USER}/favorites/${id}`);
   }
 
-  addMovieToFav(userMovieIds: IUserMovieIds): Observable<IUser> {
-    return this.http.post<IUser>(
+  addMovieToFav(userMovieIds: IUserMovieIds): Observable<IMovie> {
+    return this.http.post<IMovie>(
       `${this.URL_USER}/addMovieToFav`,
-      userMovieIds
+      {
+        userId: userMovieIds.userId,
+        movieId: userMovieIds.movieId,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('token')!)}`,
+        },
+        withCredentials: true,
+      }
     );
   }
 
@@ -45,11 +54,13 @@ export class UserService {
   }
 
   removeMovieFromFav(userMovieIds: IUserMovieIds) {
-    return this.http
-      .delete<any>(`${this.URL_USER}/removeMovieFromFav`, {
-        body: userMovieIds,
-      })
-      .subscribe();
+    return this.http.delete<any>(`${this.URL_USER}/removeMovieFromFav`, {
+      body: userMovieIds,
+      headers: {
+        authorization: `Bearer ${JSON.parse(localStorage.getItem('token')!)}`,
+      },
+      withCredentials: true,
+    });
   }
 
   deleteUser(id: string) {
