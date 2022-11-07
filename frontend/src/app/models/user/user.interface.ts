@@ -1,6 +1,7 @@
 import { UserRole } from 'src/app/enums/enums';
 import { IComment } from '../comment/comment.interface';
 import { IMovie } from '../movie/movie.interface';
+import { IUserFavMovie } from '../user-fav-movie/userFavMovie.interface';
 
 export interface IUser {
   id: string;
@@ -11,8 +12,7 @@ export interface IUser {
   isSubscribed: boolean;
   role: UserRole;
   comments: IComment[];
-  ratedToMovies: IMovie[];
-  favorites: IMovie[];
+  userFavorites: IUserFavMovie[];
   createdDate: Date;
   updatedDate: Date;
 }

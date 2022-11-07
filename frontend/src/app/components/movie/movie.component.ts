@@ -10,6 +10,7 @@ import { IUser } from 'src/app/models/user/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { IUserMovieIds } from '../../models/user/changesUser.interface';
+import { UserFavMoviesService } from 'src/app/services/user-fav-movies.service';
 
 @Component({
   selector: 'app-movie',
@@ -30,6 +31,7 @@ export class MovieComponent implements OnInit {
     private movieService: MovieService,
     private userService: UserService,
     private personService: PersonService,
+    private userFavMoviesService: UserFavMoviesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public matDialog: MatDialog,
@@ -50,12 +52,21 @@ export class MovieComponent implements OnInit {
       .subscribe({ next: (data: string[]) => (this.actors = data) });
 
     this.authService.getUserCookie().subscribe(
-      (data: any) => (this.user = data),
+      async (data: any) => await (this.user = data),
       (error) => {
         this.errorMessage = error.message;
         console.log(error);
       }
     );
+
+    // this.activatedRoute.params
+    //   .pipe(
+    //     pluck('id'),
+    //     switchMap(async (movieId) =>
+    //       this.user.userFavorites.find((x) => x.movieId == movieId)
+    //     )
+    //   )
+    //   .subscribe((data: any) => (this.isSelected = data.isSelected));
   }
 
   playVideo(id: string) {
@@ -69,30 +80,55 @@ export class MovieComponent implements OnInit {
     console.log(this.actors);
   }
 
-  addFavorites(movieId: string) {
-    this.userMovieIds.userId = this.user.id;
-    this.userMovieIds.movieId = movieId;
+  // addRemFavorites(movieId: string) {
+  //   this.userMovieIds.userId = this.user.id;
+  //   this.userMovieIds.movieId = movieId;
 
-    // console.log(this.user.favorites.find((x) => x.id == movieId));
+  //   // console.log(this.user.favorites.find((x) => x.id == movieId));
 
-    const findMovie = this.user.favorites.find((x) => x.id == movieId);
+  //   const findMovie = this.user.userFavorites.find((x) => x.movieId == movieId);
 
-    this.isSelected = findMovie ? true : false;
+  //   // const boolRes = findMovie ? true : false;
 
-    console.log(this.isSelected);
+  //   // console.log(findMovie?.id);
 
-    if (!this.isSelected) {
-      this.userService.addMovieToFav(this.userMovieIds).subscribe();
-      console.log('Добавлено');
+  //   if (!findMovie?.isSelected) {
+  //     this.userFavMoviesService.addUserFavMovie(this.userMovieIds).subscribe();
+  //     console.log('Добавлено');
 
-      this.isSelected = true;
-    } else {
-      this.userService.removeMovieFromFav(this.userMovieIds).subscribe();
-      console.log('Удалено');
+  //     const findMovie2 = this.user.userFavorites.find(
+  //       (x) => x.movieId == movieId
+  //     );
 
-      this.isSelected = false;
-    }
-    // this.isSelected = !this.isSelected ? true : false;
+  //     console.log(findMovie2);
+
+  //     this.userFavMoviesService
+  //       .updateUserFavMovie(findMovie2!.id, {
+  //         isSelected: true,
+  //       })
+  //       .subscribe();
+
+  //     console.log(findMovie?.isSelected);
+  //   } else {
+  //     this.userFavMoviesService
+  //       .removeUserFavMovie(this.userMovieIds)
+  //       .subscribe();
+  //     console.log('Удалено');
+
+  //     this.userFavMoviesService
+  //       .updateUserFavMovie(findMovie!.id, {
+  //         isSelected: false,
+  //       })
+  //       .subscribe();
+  //   }
+
+  //   this.isSelected = findMovie?.isSelected;
+
+  //   console.log(this.isSelected);
+  // }
+
+  favAddRem() {
+    this.isSelected = !this.isSelected ? true : false;
   }
 
   logout() {
