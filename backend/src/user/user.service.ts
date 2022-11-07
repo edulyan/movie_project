@@ -17,6 +17,7 @@ import { UserDtoUpd } from './dto/userUpd.dto';
 import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
 import { Cache } from 'cache-manager';
 import { Movie } from '../movie/entity/movie.entity';
+import { WalletService } from '../wallet/wallet.service';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,7 @@ export class UserService {
     // @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly movieService: MovieService,
+    private readonly walletService: WalletService,
     private readonly jwtService: JwtService,
     private readonly redisCacheService: RedisCacheService,
   ) {}
@@ -60,7 +62,7 @@ export class UserService {
 
   async getById(id: string): Promise<User> {
     const user = await this.userRepository.findOne(id, {
-      relations: ['comments', 'favorites'],
+      relations: ['comments', 'userFavorites'],
     });
 
     if (!user) {
@@ -95,31 +97,28 @@ export class UserService {
     return user;
   }
 
-  async getFavorites(id: string): Promise<Movie[]> {
-    const user = await this.getById(id);
+  async getUserFavMovies(userId: string) {
+    const user = await this.getById(userId);
 
-    return user.favorites;
+    const moviesIds: string[] = user.userFavorites.map((item) => item.movieId);
+
+    const movies: Movie[] = await Promise.all(
+      moviesIds.map((movieId) => {
+        return this.movieService.getById(movieId);
+      }),
+    );
+
+    return movies;
   }
 
   async createUser(userDto: UserDto): Promise<User> {
     const newUser = await this.userRepository.create(userDto);
 
+    const wallet = await this.walletService.createWallet();
+    wallet.user = newUser;
+    await this.walletService.saveWallet(wallet);
+
     return await this.userRepository.save(newUser);
-  }
-
-  async addMovieToFav(dto: UserMovieIdsDto): Promise<Movie> {
-    const user = await this.getById(dto.userId);
-    const movie = await this.movieService.getById(dto.movieId);
-
-    user.favorites.push(movie);
-
-    await this.userRepository.save(user).finally(() => {
-      this.logger.log(
-        `${UserService.prototype.addMovieToFav.name}() - Successfully was added movie to favorites`,
-      );
-    });
-
-    return movie;
   }
 
   async changeUserRole(changeRole: ChangeRoleDto) {
@@ -166,35 +165,35 @@ export class UserService {
     });
   }
 
-  async removeMovieFromFav(dto: UserMovieIdsDto): Promise<boolean> {
-    const user = await this.getById(dto.userId);
+  // async removeMovieFromFav(dto: UserMovieIdsDto): Promise<boolean> {
+  //   const user = await this.getById(dto.userId);
 
-    if (!user) {
-      this.logger.error(
-        `${UserService.prototype.removeMovieFromFav.name}() - User not found`,
-      );
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
+  //   if (!user) {
+  //     this.logger.error(
+  //       `${UserService.prototype.removeMovieFromFav.name}() - User not found`,
+  //     );
+  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  //   }
 
-    const found = user.favorites.findIndex((x: any) => x.id == dto.movieId);
+  //   const found = user.favorites.findIndex((x: any) => x.id == dto.movieId);
 
-    if (found == null) {
-      this.logger.error(
-        `${UserService.prototype.removeMovieFromFav.name}() - Movie not found`,
-      );
-      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
-    }
+  //   if (found == null) {
+  //     this.logger.error(
+  //       `${UserService.prototype.removeMovieFromFav.name}() - Movie not found`,
+  //     );
+  //     throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+  //   }
 
-    user.favorites.splice(found, 1);
+  //   user.favorites.splice(found, 1);
 
-    await this.userRepository.save(user).finally(() => {
-      this.logger.log(
-        `${UserService.prototype.removeMovieFromFav.name}() - Successfully was deleted movie from favorites`,
-      );
-    });
+  //   await this.userRepository.save(user).finally(() => {
+  //     this.logger.log(
+  //       `${UserService.prototype.removeMovieFromFav.name}() - Successfully was deleted movie from favorites`,
+  //     );
+  //   });
 
-    return true;
-  }
+  //   return true;
+  // }
 
   async deleteUser(id: string): Promise<boolean> {
     const user = await this.userRepository.findOne(id);

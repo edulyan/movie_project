@@ -13,6 +13,7 @@ import {
 import { Movie } from '../../movie/entity/movie.entity';
 import { Comment } from '../../comment/entity/comment.entity';
 import { UserRole } from '../../common/enums';
+import { UserFavMovies } from '../../user-fav-movies/entity/userFavMovies.entity';
 
 @Entity()
 export class User {
@@ -46,12 +47,10 @@ export class User {
   })
   comments: Comment[];
 
-  @ManyToMany(() => Movie)
-  @JoinTable()
-  ratedToMovies: Movie[];
-
-  @OneToMany(() => Movie, (movie) => movie.userFavorites)
-  favorites: Movie[];
+  @OneToMany(() => UserFavMovies, (userFavMovies) => userFavMovies.user, {
+    cascade: true,
+  })
+  userFavorites: UserFavMovies[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdDate: Date;

@@ -14,6 +14,8 @@ import { RedisCacheModule } from './cache/redisCache.module';
 import { MailModule } from './mailer/mailer.module';
 import { PersonModule } from './person/person.module';
 import { MoviePersonModule } from './movie-person/movie-person.module';
+import { WalletModule } from './wallet/wallet.module';
+import { UserFavMoviesModule } from './user-fav-movies/user-fav-movies.module';
 import MailConfig from './config/mailer.config';
 
 @Module({
@@ -37,6 +39,8 @@ import MailConfig from './config/mailer.config';
     MailModule,
     PersonModule,
     MoviePersonModule,
+    WalletModule,
+    UserFavMoviesModule,
   ],
   controllers: [],
   providers: [],

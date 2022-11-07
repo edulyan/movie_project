@@ -10,7 +10,8 @@ import {
 import { User } from '../../user/entity/user.entity';
 import { Comment } from '../../comment/entity/comment.entity';
 import { Country, Genre } from '../../common/enums';
-import { PersonToMovie } from '../../movie-person/entity/personToMovie.entity';
+import { MoviePerson } from '../../movie-person/entity/personToMovie.entity';
+import { UserFavMovies } from '../../user-fav-movies/entity/userFavMovies.entity';
 
 @Entity()
 export class Movie {
@@ -40,9 +41,6 @@ export class Movie {
 
   @Column({ default: false })
   withSubscription: boolean;
-
-  // @Column('varchar', { array: true })
-  // actors: string[];
 
   @Column({
     type: 'enum',
@@ -78,11 +76,11 @@ export class Movie {
   @OneToMany(() => Comment, (comment) => comment.movie)
   comments: Comment[];
 
-  @OneToMany(() => PersonToMovie, (personToMovie) => personToMovie.movie)
-  personToMovies: PersonToMovie[];
+  @OneToMany(() => MoviePerson, (personToMovie) => personToMovie.movie)
+  personToMovies: MoviePerson[];
 
-  @ManyToOne(() => User, (user) => user.favorites)
-  userFavorites: User;
+  @OneToMany(() => UserFavMovies, (userFavMovies) => userFavMovies.movie)
+  userFavorites: UserFavMovies[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdDate: Date;

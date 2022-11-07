@@ -6,15 +6,16 @@ import { MovieController } from './movie.controller';
 import { MovieService } from './movie.service';
 import { FileModule } from '../file/file.module';
 import { AuthModule } from '../auth/auth.module';
-import { PersonToMovie } from '../movie-person/entity/personToMovie.entity';
+import { MoviePerson } from '../movie-person/entity/personToMovie.entity';
 import { PersonModule } from '../person/person.module';
+import { UserFavMovies } from '../user-fav-movies/entity/userFavMovies.entity';
 
 @Module({
   controllers: [MovieController],
   providers: [MovieService],
   exports: [MovieService],
   imports: [
-    TypeOrmModule.forFeature([Movie, Comment, PersonToMovie]),
+    TypeOrmModule.forFeature([Movie, Comment, MoviePerson, UserFavMovies]),
     FileModule,
     AuthModule,
     forwardRef(() => PersonModule),

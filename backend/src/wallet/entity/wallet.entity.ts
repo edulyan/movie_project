@@ -2,28 +2,23 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Movie } from '../../movie/entity/movie.entity';
 import { User } from '../../user/entity/user.entity';
 
 @Entity()
-export class Comment {
+export class Wallet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  text: string;
+  @Column({ default: 0 })
+  balance: number;
 
-  @Column()
-  mark: number;
-
-  @ManyToOne(() => Movie, (movie) => movie.comments, { onDelete: 'CASCADE' })
-  movie: Movie;
-
-  @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
+  @OneToOne(() => User, (user) => user.id, { onDelete: 'CASCADE', eager: true })
+  @JoinColumn()
   user: User;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })

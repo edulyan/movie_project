@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Repository, UpdateResult } from 'typeorm';
-import { PersonToMovie } from './entity/personToMovie.entity';
+import { MoviePerson } from './entity/personToMovie.entity';
 import { PersonService } from '../person/person.service';
 import { MovieService } from '../movie/movie.service';
 import { CreateMoviePersonDto } from './dto/createMoviePerson.dto';
@@ -10,13 +10,13 @@ import { UpdateMoviePersonDto } from './dto/updateMoviePerson.dto';
 @Injectable()
 export class MoviePersonService {
   constructor(
-    @InjectRepository(PersonToMovie)
-    private moviePersonRepository: Repository<PersonToMovie>,
+    @InjectRepository(MoviePerson)
+    private moviePersonRepository: Repository<MoviePerson>,
     private movieService: MovieService,
     private personService: PersonService,
   ) {}
 
-  async getById(id: string): Promise<PersonToMovie> {
+  async getById(id: string): Promise<MoviePerson> {
     const moviePerson = await this.moviePersonRepository.findOne(id);
 
     if (!moviePerson) {
@@ -31,7 +31,7 @@ export class MoviePersonService {
 
   async createMoviePerson(
     createDto: CreateMoviePersonDto,
-  ): Promise<PersonToMovie> {
+  ): Promise<MoviePerson> {
     const { movieId, personId } = createDto;
     await this.movieService.getById(movieId);
     await this.personService.getById(personId);

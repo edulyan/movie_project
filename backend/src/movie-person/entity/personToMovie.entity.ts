@@ -4,7 +4,7 @@ import { Person } from '../../person/entity/person.entity';
 import { MoviePersonTypeEnum } from '../../common/enums';
 
 @Entity({ name: 'movies_persons' })
-export class PersonToMovie {
+export class MoviePerson {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

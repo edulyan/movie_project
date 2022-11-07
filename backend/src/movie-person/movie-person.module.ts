@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PersonToMovie } from './entity/personToMovie.entity';
+import { MoviePerson } from './entity/personToMovie.entity';
 import { MoviePersonController } from './movie-person.controller';
 import { MoviePersonService } from './movie-person.service';
 import { Movie } from '../movie/entity/movie.entity';
@@ -12,7 +12,7 @@ import { PersonModule } from '../person/person.module';
   controllers: [MoviePersonController],
   providers: [MoviePersonService],
   imports: [
-    TypeOrmModule.forFeature([PersonToMovie, Movie, Person]),
+    TypeOrmModule.forFeature([MoviePerson, Movie, Person]),
     MovieModule,
     PersonModule,
   ],

@@ -68,7 +68,7 @@ export class AuthController {
     const user = await this.userRepository.findOne(
       { id: data['id'] },
       {
-        relations: ['comments', 'favorites'],
+        relations: ['comments', 'userFavorites'],
       },
     );
 

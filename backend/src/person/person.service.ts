@@ -11,15 +11,15 @@ import { MovieService } from '../movie/movie.service';
 import { CreatePersonDto } from './dto/createPerson.dto';
 import { Person } from './entity/person.entity';
 import { PersonMovieIdsDto, UserMovieIdsDto } from '../common/dto';
-import { PersonToMovie } from '../movie-person/entity/personToMovie.entity';
+import { MoviePerson } from '../movie-person/entity/personToMovie.entity';
 import { UpdatePersonDto } from './dto/updatePerson.dto';
 
 @Injectable()
 export class PersonService {
   constructor(
     @InjectRepository(Person) private personRepository: Repository<Person>,
-    @InjectRepository(PersonToMovie)
-    private personToMovieRepo: Repository<PersonToMovie>,
+    @InjectRepository(MoviePerson)
+    private personToMovieRepo: Repository<MoviePerson>,
     @Inject(forwardRef(() => MovieService))
     private movieService: MovieService,
   ) {}

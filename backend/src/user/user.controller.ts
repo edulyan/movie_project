@@ -65,14 +65,8 @@ export class UserController {
   }
 
   @Get('/favorites/:id')
-  async getFavorites(@Param('id') id: string) {
-    return await this.userService.getFavorites(id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('/addMovieToFav')
-  async addMovieToFav(@Body() dto: UserMovieIdsDto) {
-    return await this.userService.addMovieToFav(dto);
+  async getUserFavMovies(@Param('id') id: string) {
+    return await this.userService.getUserFavMovies(id);
   }
 
   @Post('/changeUserRole')
@@ -85,12 +79,6 @@ export class UserController {
   @Put(':id')
   async updateUser(@Param('id') id: string, @Body() user: UserDtoUpd) {
     return await this.userService.updateUser(id, user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Delete('/removeMovieFromFav')
-  async removeMovieFromFav(@Body() dto: UserMovieIdsDto) {
-    return await this.userService.removeMovieFromFav(dto);
   }
 
   @Roles(UserRole.ADMIN)

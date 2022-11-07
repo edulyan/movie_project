@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { RedisCacheModule } from '../cache/redisCache.module';
 import { User } from './entity/user.entity';
 import { EventEmit } from './event-emitter';
+import { UserFavMovies } from '../user-fav-movies/entity/userFavMovies.entity';
+import { Comment } from '../comment/entity/comment.entity';
+import { WalletModule } from '../wallet/wallet.module';
 
 @Module({
   providers: [UserService, EventEmit],
@@ -19,9 +22,10 @@ import { EventEmit } from './event-emitter';
         expiresIn: '24h',
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Comment, UserFavMovies]),
     MovieModule,
     AuthModule,
+    WalletModule,
     RedisCacheModule,
   ],
   exports: [UserService],
