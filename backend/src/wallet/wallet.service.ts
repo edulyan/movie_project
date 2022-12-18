@@ -15,8 +15,4 @@ export class WalletService {
 
     return await this.walletRepository.save(wallet);
   }
-
-  async saveWallet(wallet: Wallet): Promise<Wallet> {
-    return await this.walletRepository.save(wallet);
-  }
 }

@@ -11,6 +11,7 @@ import { EventEmit } from './event-emitter';
 import { UserFavMovies } from '../user-fav-movies/entity/userFavMovies.entity';
 import { Comment } from '../comment/entity/comment.entity';
 import { WalletModule } from '../wallet/wallet.module';
+import { Wallet } from '../wallet/entity/wallet.entity';
 
 @Module({
   providers: [UserService, EventEmit],
@@ -22,7 +23,7 @@ import { WalletModule } from '../wallet/wallet.module';
         expiresIn: '24h',
       },
     }),
-    TypeOrmModule.forFeature([User, Comment, UserFavMovies]),
+    TypeOrmModule.forFeature([User, Comment, UserFavMovies, Wallet]),
     MovieModule,
     AuthModule,
     WalletModule,

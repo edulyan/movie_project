@@ -17,7 +17,7 @@ export class ChangeInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     const req = context.switchToHttp().getRequest();
 
-    if (req.body.title.length > 10) {
+    if (req.body.title.length > 40) {
       throw new HttpException(
         'Title length is too long',
         HttpStatus.BAD_REQUEST,

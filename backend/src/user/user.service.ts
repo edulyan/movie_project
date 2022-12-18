@@ -114,9 +114,8 @@ export class UserService {
   async createUser(userDto: UserDto): Promise<User> {
     const newUser = await this.userRepository.create(userDto);
 
-    const wallet = await this.walletService.createWallet();
-    wallet.user = newUser;
-    await this.walletService.saveWallet(wallet);
+    const createWallet = await this.walletService.createWallet();
+    newUser.wallet = createWallet;
 
     return await this.userRepository.save(newUser);
   }

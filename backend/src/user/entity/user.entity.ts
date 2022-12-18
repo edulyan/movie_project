@@ -14,6 +14,7 @@ import { Movie } from '../../movie/entity/movie.entity';
 import { Comment } from '../../comment/entity/comment.entity';
 import { UserRole } from '../../common/enums';
 import { UserFavMovies } from '../../user-fav-movies/entity/userFavMovies.entity';
+import { Wallet } from '../../wallet/entity/wallet.entity';
 
 @Entity()
 export class User {
@@ -41,6 +42,13 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole;
+
+  @OneToOne(() => Wallet, (wallet) => wallet.id, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  @JoinColumn()
+  wallet: Wallet;
 
   @OneToMany(() => Comment, (comment) => comment.user, {
     cascade: true,
