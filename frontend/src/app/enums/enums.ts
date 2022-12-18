@@ -4,13 +4,14 @@ export enum UserRole {
 }
 
 export enum Genre {
-  ACTION = 'action',
-  COMEDY = 'comedy',
-  DRAMA = 'drama',
-  FANTASY = 'fantasy',
-  HORROR = 'horror',
-  ROMANCE = 'romance',
-  THRILLER = 'thriller',
+  ACTION = 'боевик',
+  COMEDY = 'комедия',
+  DRAMA = 'драма',
+  FANTASY = 'фэнтэзи',
+  HORROR = 'ужасы',
+  ROMANCE = 'мелодрама',
+  THRILLER = 'триллер',
+  FANTASTIQUE = 'фантастика',
 }
 
 export enum MoviePersonTypeEnum {

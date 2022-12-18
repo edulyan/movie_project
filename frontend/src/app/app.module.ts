@@ -14,6 +14,8 @@ import { HomeModule } from './components/home/home.module';
 import { MovieModule } from './components/movie/movie.module';
 import { VideoDialogModule } from './dialogs/video-dialog/video-dialog.module';
 import { FavoritesModule } from './components/favorites/favorites.module';
+import { ProfileModule } from './components/profile/profile.module';
+import { GenreModule } from './components/genre/genre.module';
 import { JwtInterceptor } from './common/jwt.interceptor';
 import { ErrorInterceptor } from './common/error.interceptor';
 
@@ -33,6 +35,8 @@ import { ErrorInterceptor } from './common/error.interceptor';
     MovieModule,
     VideoDialogModule,
     FavoritesModule,
+    ProfileModule,
+    GenreModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,93 @@
+::ng-deep .mat-menu-content {
+  background-color: rgb(165, 165, 165);
+  width: 250px;
+}
+
+.mat-menu-item {
+  font-size: 22px;
+
+  .mat-icon {
+    font-size: 26px;
+    margin-right: 20px;
+  }
+}
+
+//HEADER-STYLE
+header {
+  position: relative;
+  display: flex;
+  height: 90px;
+  background-color: rgb(50, 50, 50);
+  border-bottom: 2px solid rgb(70, 70, 70);
+}
+
+.menu {
+  padding: 25px 45px;
+  margin-left: 20px;
+
+  .menu-icon {
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+  }
+}
+
+.logo {
+  position: absolute;
+  color: rgb(255, 255, 255);
+  margin: 30px 110px;
+  font-size: 40px;
+}
+
+.account-div {
+  position: absolute;
+  margin-top: 20px;
+  right: 2%;
+
+  .account-btn {
+    color: rgb(165, 165, 165);
+  }
+
+  .account-icon {
+    width: 55px;
+    height: 55px;
+    font-size: 55px;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.genre-main {
+  min-height: 90.6vh;
+  background-color: rgb(25, 25, 25);
+
+  .genre-list {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: rgb(25, 25, 25);
+
+    .mat-grid-list {
+      .mat-grid-tile {
+        .genre-btn {
+          .genre-img {
+            height: 225px;
+            width: 400px;
+            border-radius: 20px;
+          }
+
+          .genre-name {
+            position: absolute;
+            top: 42.5%;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 50px;
+            width: 400px;
+            background-color: rgb(80, 80, 80, 0.5);
+            color: rgb(255, 255, 255);
+          }
+        }
+      }
+    }
+  }
+}

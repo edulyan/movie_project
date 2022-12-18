@@ -1,0 +1,61 @@
+<header>
+  <div class="menu">
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <mat-menu #mainMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/home']">
+      <mat-icon>home</mat-icon>
+      <span>Главная</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/favorites', user.id]">
+      <mat-icon>favorite</mat-icon>
+      <span>Любимые</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/genre']">
+      <mat-icon>manage_search</mat-icon>
+      <span>Жанры</span>
+    </button>
+  </mat-menu>
+
+  <h1 class="logo">ЭДФЛИКС</h1>
+  <div class="account-div">
+    <button
+      type="button"
+      [matMenuTriggerFor]="accountMenu"
+      mat-button
+      class="account-btn"
+    >
+      <mat-icon class="account-icon">account_circle</mat-icon>
+    </button>
+  </div>
+  <mat-menu #accountMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/profile', user.id]">
+      <mat-icon>person</mat-icon>
+      <span>Профиль</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Выйти</span>
+    </button>
+  </mat-menu>
+</header>
+
+<div class="genre-main">
+  <div class="genre-list">
+    <mat-grid-list cols="3" rowHeight="292px">
+      <mat-grid-tile *ngFor="let genre of genreList">
+        <button class="genre-btn" type="button" mat-button>
+          <img
+            class="genre-img"
+            mat-card-image
+            src="/assets/{{ genre }}.jpg"
+            alt="image"
+          />
+          <h1 class="genre-name">{{ genre.toUpperCase() }}</h1>
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

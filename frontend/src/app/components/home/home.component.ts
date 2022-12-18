@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   movie: IMovie = {} as IMovie;
   user: IUser = {} as IUser;
   authenticated = false;
-  errorMessage: String;
+  errorMessage: string;
 
   constructor(
     private movieService: MovieService,
@@ -23,9 +23,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.movieService
-      .getAll()
-      .subscribe((movieListItem) => this.movieData.next(movieListItem));
+    this.movieService.getAll().subscribe({
+      next: (movieListItem) => this.movieData.next(movieListItem),
+      error: (err) => console.log(err),
+      complete: () => console.info('complete'),
+    });
 
     this.authService.getUserCookie().subscribe(
       (data: any) => (this.user = data),

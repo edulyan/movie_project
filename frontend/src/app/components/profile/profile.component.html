@@ -1,0 +1,51 @@
+<header>
+  <div class="menu">
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </button>
+  </div>
+  <mat-menu #mainMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/home']">
+      <mat-icon>home</mat-icon>
+      <span>Главная</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/favorites', user.id]">
+      <mat-icon>favorite</mat-icon>
+      <span>Любимые</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>Disable alerts</span>
+    </button>
+  </mat-menu>
+
+  <h1 class="logo">ЭДФЛИКС</h1>
+  <div class="account-div">
+    <button
+      type="button"
+      [matMenuTriggerFor]="accountMenu"
+      mat-button
+      class="account-btn"
+    >
+      <mat-icon class="account-icon">account_circle</mat-icon>
+    </button>
+  </div>
+  <mat-menu #accountMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/profile', user.id]">
+      <mat-icon>person</mat-icon>
+      <span>Профиль</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/login']" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Выйти</span>
+    </button>
+  </mat-menu>
+</header>
+
+<div class="user-main">
+  <div class="user-info">
+    <div class="user-image">
+      <mat-icon class="user-icon">person</mat-icon>
+    </div>
+  </div>
+</div>

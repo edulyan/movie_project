@@ -30,9 +30,9 @@
       <mat-icon>favorite</mat-icon>
       <span>Любимые</span>
     </button>
-    <button mat-menu-item>
-      <mat-icon>notifications_off</mat-icon>
-      <span>Disable alerts</span>
+    <button mat-menu-item [routerLink]="['/genre']">
+      <mat-icon>manage_search</mat-icon>
+      <span>Жанры</span>
     </button>
   </mat-menu>
 
@@ -48,7 +48,7 @@
     </button>
   </div>
   <mat-menu #accountMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/profile', user.id]">
       <mat-icon>person</mat-icon>
       <span>Профиль</span>
     </button>
@@ -74,7 +74,7 @@
     </div>
 
     <div class="movie-list">
-      <mat-grid-list cols="5" rowHeight="400px">
+      <mat-grid-list cols="5" rowHeight="350px">
         <mat-grid-tile *ngFor="let movie of movieListItem">
           <button type="button" mat-button [routerLink]="['/movie/', movie.id]">
             <img
