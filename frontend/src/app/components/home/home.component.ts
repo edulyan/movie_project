@@ -29,13 +29,13 @@ export class HomeComponent implements OnInit {
       complete: () => console.info('complete'),
     });
 
-    this.authService.getUserCookie().subscribe(
-      (data: any) => (this.user = data),
-      (error) => {
-        this.errorMessage = error.message;
-        console.log(error);
-      }
-    );
+    this.authService.getUserCookie().subscribe({
+      next: (data: IUser) => (this.user = data),
+      error: (err) => {
+        this.errorMessage = err.message;
+        console.log(err);
+      },
+    });
   }
 
   getMovies(): Observable<IMovie[]> {

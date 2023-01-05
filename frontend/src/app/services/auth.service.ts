@@ -49,7 +49,9 @@ export class AuthService {
   }
 
   getUserCookie() {
-    return this.http.get(`${this.URL_AUTH}/user`, { withCredentials: true });
+    return this.http.get<IUser>(`${this.URL_AUTH}/user`, {
+      withCredentials: true,
+    });
   }
 
   // logOut() {

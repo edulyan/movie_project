@@ -87,7 +87,7 @@
               class="toFavorite-btn"
               mat-raised-button
               [color]="isSelected ? 'warn' : 'basic'"
-              (click)="favAddRem()"
+              (click)="favAddRem(movie.id)"
               type="button"
             >
               <mat-icon class="favorite-icon">favorite</mat-icon>

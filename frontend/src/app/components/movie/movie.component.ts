@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, pluck, switchMap, take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { IUserMovieIds } from '../../models/user/changesUser.interface';
 import { UserFavMoviesService } from 'src/app/services/user-fav-movies.service';
+import { IUserFavMovie } from 'src/app/models/user-fav-movie/userFavMovie.interface';
 
 @Component({
   selector: 'app-movie',
@@ -23,9 +30,9 @@ export class MovieComponent implements OnInit {
   actors$: Observable<string[]>;
   actors: string[] = [];
   errorMessage: string;
-  isSelected: boolean = false;
   userMovieIds: IUserMovieIds = {} as IUserMovieIds;
   authenticated = false;
+  isSelected: IUserFavMovie | undefined | boolean;
 
   constructor(
     private movieService: MovieService,
@@ -39,6 +46,27 @@ export class MovieComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.authService.getUserCookie().subscribe({
+      next: (data: IUser) => {
+        (this.user = data),
+          this.activatedRoute.params
+            .pipe(
+              pluck('id'),
+              switchMap(async (movieId) => {
+                this.log(movieId);
+                this.isSelected = data.userFavorites.find(
+                  (x) => x.movieId === movieId
+                );
+              })
+            )
+            .subscribe();
+      },
+      error: (err) => {
+        this.errorMessage = err.message;
+        console.log(err);
+      },
+    });
+
     this.movie$ = this.activatedRoute.params.pipe(
       pluck('id'),
       switchMap((id) => this.movieService.getById(id))
@@ -51,22 +79,31 @@ export class MovieComponent implements OnInit {
       )
       .subscribe({ next: (data: string[]) => (this.actors = data) });
 
-    this.authService.getUserCookie().subscribe(
-      async (data: any) => await (this.user = data),
-      (error) => {
-        this.errorMessage = error.message;
-        console.log(error);
-      }
-    );
+    // this.authService.getUserCookie().subscribe({
+    //   next: (data: IUser) => {
+    //     this.isSelected = data.userFavorites.find(
+    //       (x) => x.movieId == '2eafe0f2-a0e4-4672-8641-eeb58a8fea7f'
+    //     );
+    //   },
+    //   error: (err) => {
+    //     this.errorMessage = err.message;
+    //     console.log(err);
+    //   },
+    // });
 
     // this.activatedRoute.params
     //   .pipe(
     //     pluck('id'),
-    //     switchMap(async (movieId) =>
-    //       this.user.userFavorites.find((x) => x.movieId == movieId)
-    //     )
+    //     switchMap((movieId): any => {
+    //       console.log(this.user),
+    //         this.user.userFavorites.find((x) => x.movieId == movieId);
+    //     })
     //   )
-    //   .subscribe((data: any) => (this.isSelected = data.isSelected));
+    //   .subscribe({ next: (data: any) => (this.isSelected = data) });
+  }
+
+  private log(msg: string) {
+    console.log(msg);
   }
 
   playVideo(id: string) {
@@ -127,8 +164,27 @@ export class MovieComponent implements OnInit {
   //   console.log(this.isSelected);
   // }
 
-  favAddRem() {
-    this.isSelected = !this.isSelected ? true : false;
+  favAddRem(movieId: string) {
+    console.log('START - ', this.isSelected);
+    console.log('START - ', this.user);
+
+    this.userMovieIds.userId = this.user.id;
+    this.userMovieIds.movieId = movieId;
+
+    if (!this.isSelected) {
+      this.userFavMoviesService.addUserFavMovie(this.userMovieIds).subscribe({
+        complete: () => console.info('Добавлено'),
+      });
+
+      this.isSelected = true;
+    } else {
+      this.userFavMoviesService
+        .removeUserFavMovie(this.userMovieIds)
+        .subscribe({ complete: () => console.info('Удалено') });
+      this.isSelected = false;
+    }
+
+    console.log('END - ', this.isSelected);
   }
 
   logout() {
