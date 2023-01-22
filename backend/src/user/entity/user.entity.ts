@@ -36,6 +36,9 @@ export class User {
   @Column({ default: false })
   isSubscribed: boolean;
 
+  @Column({ default: null })
+  next_payment_date: string;
+
   @Column({
     type: 'enum',
     enum: UserRole,

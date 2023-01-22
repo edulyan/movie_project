@@ -14,10 +14,14 @@ import { Repository, UpdateResult } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { User } from './entity/user.entity';
 import { UserDtoUpd } from './dto/userUpd.dto';
-import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
+import { ChangeRoleDto, SubscribeDto, UserMovieIdsDto } from '../common/dto';
 import { Cache } from 'cache-manager';
 import { Movie } from '../movie/entity/movie.entity';
 import { WalletService } from '../wallet/wallet.service';
+import { PlanService } from '../plan/plan.service';
+import { PlanType } from '../common/enums';
+import * as moment from 'moment';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class UserService {
@@ -28,19 +32,19 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly movieService: MovieService,
     private readonly walletService: WalletService,
+    private readonly planService: PlanService,
     private readonly jwtService: JwtService,
     private readonly redisCacheService: RedisCacheService,
   ) {}
 
   async getAll(): Promise<User[]> {
     try {
-      const users = await this.userRepository
-        .find({ cache: true })
-        .finally(() => {
-          this.logger.log(
-            `${UserService.prototype.getAll.name}() - Successfully found users`,
-          );
-        });
+      const users = await this.userRepository.find({ cache: true });
+      // .finally(() => {
+      //   this.logger.log(
+      //     `${UserService.prototype.getAll.name}() - Successfully found users`,
+      //   );
+      // });
 
       // await this.cacheManager.set('cached_users', users, { ttl: 100 });
       // const cachedUsers = await this.cacheManager.get('cached_users');
@@ -139,6 +143,41 @@ export class UserService {
     return { user, token };
   }
 
+  //доделать оплату!
+  async subscribe(subscribeDto: SubscribeDto) {
+    const user = await this.getById(subscribeDto.userId);
+    const plan = await this.planService.getPlanById(subscribeDto.planId);
+
+    // console.log('USER - ', user);
+    // console.log('PLAN - ', plan);
+
+    const date = this.planService.getNextDate(plan.type);
+
+    // console.log(date);
+
+    user.isSubscribed = true;
+    user.next_payment_date = date;
+
+    this.userRepository.save(user);
+
+    return user.next_payment_date;
+  }
+
+  @Cron(CronExpression.EVERY_SECOND, {
+    timeZone: 'Europe/Moscow',
+  })
+  async subsDateCheck() {
+    let dateNow = moment(Date.now()).format('DD-MM-YYYY:HH-mm-ss');
+    const users = await this.getAll();
+
+    for (let i = 0; i < users.length; i++) {
+      if (dateNow === users[i].next_payment_date) {
+        users[i].isSubscribed = false;
+        await this.userRepository.save(users[i]);
+      }
+    }
+  }
+
   async updateUser(
     id: string,
     userDtoUpd: UserDtoUpd,
@@ -163,36 +202,6 @@ export class UserService {
       );
     });
   }
-
-  // async removeMovieFromFav(dto: UserMovieIdsDto): Promise<boolean> {
-  //   const user = await this.getById(dto.userId);
-
-  //   if (!user) {
-  //     this.logger.error(
-  //       `${UserService.prototype.removeMovieFromFav.name}() - User not found`,
-  //     );
-  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  //   }
-
-  //   const found = user.favorites.findIndex((x: any) => x.id == dto.movieId);
-
-  //   if (found == null) {
-  //     this.logger.error(
-  //       `${UserService.prototype.removeMovieFromFav.name}() - Movie not found`,
-  //     );
-  //     throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
-  //   }
-
-  //   user.favorites.splice(found, 1);
-
-  //   await this.userRepository.save(user).finally(() => {
-  //     this.logger.log(
-  //       `${UserService.prototype.removeMovieFromFav.name}() - Successfully was deleted movie from favorites`,
-  //     );
-  //   });
-
-  //   return true;
-  // }
 
   async deleteUser(id: string): Promise<boolean> {
     const user = await this.userRepository.findOne(id);

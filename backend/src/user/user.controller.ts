@@ -15,7 +15,7 @@ import { CountFunc } from '../common/decorators/сountFunc.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
-import { ChangeRoleDto, UserMovieIdsDto } from '../common/dto';
+import { ChangeRoleDto, SubscribeDto, UserMovieIdsDto } from '../common/dto';
 import { UserDtoUpd } from './dto/userUpd.dto';
 import { UserRole } from '../common/enums';
 import { UserService } from './user.service';
@@ -72,6 +72,11 @@ export class UserController {
   @Post('/changeUserRole')
   async changeUserRole(@Body() changeRole: ChangeRoleDto) {
     return await this.userService.changeUserRole(changeRole);
+  }
+
+  @Post('/subscribe')
+  async subscribe(@Body() subscribeDto: SubscribeDto) {
+    return await this.userService.subscribe(subscribeDto);
   }
 
   @Roles(UserRole.ADMIN)

@@ -14,3 +14,8 @@ export class ChangeRoleDto {
   readonly userId: string;
   readonly role: UserRole;
 }
+
+export class SubscribeDto {
+  readonly userId: string;
+  readonly planId: string;
+}

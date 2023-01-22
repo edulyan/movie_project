@@ -10,7 +10,7 @@ export class UserFavMovies {
   @Column()
   userId: string;
 
-  @Column()
+  @Column({ unique: true })
   movieId: string;
 
   @ManyToOne(() => User, {

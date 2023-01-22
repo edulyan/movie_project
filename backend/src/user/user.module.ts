@@ -12,6 +12,7 @@ import { UserFavMovies } from '../user-fav-movies/entity/userFavMovies.entity';
 import { Comment } from '../comment/entity/comment.entity';
 import { WalletModule } from '../wallet/wallet.module';
 import { Wallet } from '../wallet/entity/wallet.entity';
+import { PlanModule } from '../plan/plan.module';
 
 @Module({
   providers: [UserService, EventEmit],
@@ -27,6 +28,7 @@ import { Wallet } from '../wallet/entity/wallet.entity';
     MovieModule,
     AuthModule,
     WalletModule,
+    PlanModule,
     RedisCacheModule,
   ],
   exports: [UserService],

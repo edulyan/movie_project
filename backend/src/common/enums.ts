@@ -18,6 +18,8 @@ export enum Genre {
   ROMANCE = 'мелодрама',
   THRILLER = 'триллер',
   FANTASTIQUE = 'фантастика',
+  WESTERN = 'вестерн',
+  DETECTIVE = 'детектив',
 }
 
 export enum MoviePersonTypeEnum {
@@ -64,4 +66,11 @@ export enum Country {
   SWEDEN = 'Швеция',
   SWITZERLAND = 'Швейцария',
   SOUTHAFRICA = 'ЮАР',
+}
+
+export enum PlanType {
+  MINUTE = '1 минута',
+  MONTH = '30 дней',
+  HALF_YEAR = '180 дней',
+  YEAR = '360 дней',
 }

@@ -16,10 +16,13 @@ import { PersonModule } from './person/person.module';
 import { MoviePersonModule } from './movie-person/movie-person.module';
 import { WalletModule } from './wallet/wallet.module';
 import { UserFavMoviesModule } from './user-fav-movies/user-fav-movies.module';
+import { PlanModule } from './plan/plan.module';
 import MailConfig from './config/mailer.config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -41,6 +44,7 @@ import MailConfig from './config/mailer.config';
     MoviePersonModule,
     WalletModule,
     UserFavMoviesModule,
+    PlanModule,
   ],
   controllers: [],
   providers: [],
